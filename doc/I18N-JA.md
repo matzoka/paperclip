@@ -85,11 +85,24 @@
 - 全ロケールJSON構文確認: 問題なし。
 - モノレポ全体の `pnpm test`/`pnpm typecheck` は今回も未実施(このサンドボックスのNode 22.23.2がリポジトリ要求の24.11+と不一致のため)。`ui` パッケージ単体の `npx vitest run`(全593ファイル、非対話dotレポーター)も試みたが、このサンドボックスでは60分超経過しても完了しなかったため中断した(jsdom環境での大量の `act()` 警告出力が主因とみられる、本変更由来のエラーではない)。次担当は、より高速な環境、または対象を絞った実行(`--project` や変更ファイルに関連するディレクトリ単位)で全体テストを完了させることを推奨する。
 
-### 未完了範囲(次の作業)
+### 未完了範囲(次の作業、Copilot Engineer時点)
 
 - 優先順位3(設定関連画面)は `ProfileSettings.tsx`・`InstanceGeneralSettings.tsx`・`CompanySettings.tsx` が完了。`PipelineSettings.tsx`(3400行超)・`PluginSettings.tsx`(1200行超)・`InstanceExperimentalSettings.tsx`(676行)は未着手。
 - 優先順位4以降(アクセス権・秘密情報・破壊的操作の警告・Issue/Task/Goal/Agent業務画面等)は未着手。
 - 共通パンくず `"Settings"`(13箇所以上)は未翻訳のまま。まとめて対応すること。
+- `ui/src/lib/interaction-audience.ts` の `describeResolverAudience()` 本体の文章化・`RESOLVER_POLICY_EFFECTS`・`RESOLVER_POLICY_CHOICES` は優先順位6(Issue Thread Interaction関連business画面)着手時に翻訳すること。
+
+**(2026-09-13追記, MATZ-11続き4・担当交代: Copilot Engineer → Claude Engineer)** セッション再開後、Copilot Engineerが完了させた `CompanySettings.tsx`/`InteractionGovernancePanel.tsx` の翻訳(commit `aa38dd1d1`)を確認した上で、直前の未完了項目に挙げられていた共通パンくず `"Settings"` をまとめて対応した。
+
+- 新規共有キー `app.breadcrumbs.settings`(en: "Settings" / ja: "設定")を追加。
+- 対象は次の16箇所(全て `setBreadcrumbs([...])` 内の `{ label: "Settings"[, href: "/company/settings"] }`): `CompanySettings.tsx`・`ProfileSettings.tsx`・`InstanceGeneralSettings.tsx`(以上3件は既存の `useTranslation` 済みファイル)、`PipelineSettings.tsx`(パンくず末尾の単独ラベル、`href`なし)、および新たに `useTranslation` を追加した `InstanceAccess.tsx`・`AdapterManager.tsx`・`InstanceExperimentalSettings.tsx`・`CompanySettingsPluginPage.tsx`・`PluginSettings.tsx`・`CompanyImport.tsx`・`CompanyEnvironments.tsx`・`PluginManager.tsx`・`CompanyAccess.tsx`(`CompanyAccess`/`CompanyAccessLegacyRoute` の2コンポーネント分)・`CompanyExport.tsx`。
+- 併せて `ProfileSettings.tsx` のパンくず2件目 `"Profile"` も既存の `settings.profile.title` キーへ置き換えた(既存キーの再利用、新規キー追加なし)。
+- このパンくずの兄弟ラベル(`"Access"`・`"Adapters"`・`"Plugins"`・`"Members"`・`"Import"`・`"Export"`・`"Environments"`・`"Experimental"`・`"Organization"`・`"Instance settings"`・`"Plugin Details"` 等)は、優先順位4(アクセス権・Adapter等)以降の該当画面着手時にまとめて翻訳する方針とし、今回は意図的に対象外とした(「共通パンくず "Settings"」という具体的な引き継ぎ事項の範囲に絞り、無秩序な一括置換を避けるため)。
+
+### 未完了範囲(次の作業、Claude Engineer時点)
+
+- 優先順位3(設定関連画面)の残り: `PipelineSettings.tsx`(3400行超)・`PluginSettings.tsx`(1200行超)・`InstanceExperimentalSettings.tsx`(676行、現時点でパンくずの"Settings"のみ翻訳済み、本文は未着手)は本体が未着手。
+- 優先順位4以降(アクセス権・秘密情報・破壊的操作の警告・Issue/Task/Goal/Agent業務画面等)は未着手。上記16箇所のパンくずの兄弟ラベルは、対応する画面の優先順位が来たタイミングでまとめて翻訳すること。
 - `ui/src/lib/interaction-audience.ts` の `describeResolverAudience()` 本体の文章化・`RESOLVER_POLICY_EFFECTS`・`RESOLVER_POLICY_CHOICES` は優先順位6(Issue Thread Interaction関連business画面)着手時に翻訳すること。
 
 ## 6. 用語集

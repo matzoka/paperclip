@@ -54,7 +54,15 @@
 
 `setLocale(locale)` は選択を `localStorage` へ保存し `i18n.changeLanguage()` を呼ぶ。テストは `ui/src/i18n/locale-detection.test.ts`。
 
-**(2026-09-13追記, MATZ-11続き)** `setLocale()` を呼び出す設定画面UIを `ui/src/pages/ProfileSettings.tsx`(個人プロフィール設定、優先順位3の最初の画面)に追加した。`supportedLocales`(約40言語)全件を選択肢とし、`ui/src/i18n/locale-names.ts` の `getLocaleDisplayName()`(`Intl.DisplayNames` ラッパー、ICU未対応環境ではロケールコードへフォールバック)で現在の表示言語における各言語名を表示する。同画面の静的文言(見出し・ラベル・エラーメッセージ)も合わせて `t()` 化した(`en.json`/`ja.json` の `settings.profile.*` / `settings.language.*`)。プレースホルダー `"Board"`(デフォルト表示名の例)は製品固有の慣用表記として翻訳していない。他の設定画面(`InstanceGeneralSettings.tsx` 等)は未着手。
+**(2026-09-13追記, MATZ-11続き)** `setLocale()` を呼び出す設定画面UIを `ui/src/pages/ProfileSettings.tsx`(個人プロフィール設定、優先順位3の最初の画面)に追加した。`supportedLocales`(約40言語)全件を選択肢とし、`ui/src/i18n/locale-names.ts` の `getLocaleDisplayName()`(`Intl.DisplayNames` ラッパー、ICU未対応環境ではロケールコードへフォールバック)で現在の表示言語における各言語名を表示する。同画面の静的文言(見出し・ラベル・エラーメッセージ)も合わせて `t()` 化した(`en.json`/`ja.json` の `settings.profile.*` / `settings.language.*`)。プレースホルダー `"Board"`(デフォルト表示名の例)は製品固有の慣用表記として翻訳していない。
+
+**(2026-09-13追記, MATZ-11続き2)** `ui/src/pages/InstanceGeneralSettings.tsx`(インスタンス全体設定: デプロイ/認証状況、ログのユーザー名伏字、キーボードショートカット、バックアップ保持期間、AIフィードバック共有、サインアウト)を全面的に `t()` 化した。`settings.instanceGeneral.*` にキーを追加。
+
+- 説明文冒頭の「有効な設定トピック一覧」(`log display, keyboard shortcuts, ...`)は、`Array.join` による英語専用の連結ロジックだったため、`Intl.ListFormat(i18n.language, { style: "long", type: "conjunction" })` を使ったロケール依存の一覧整形に置き換えた(日本語では「、」区切りになり、英語の "and" 相当の接続表現に依存しない)。
+- 日次/週次/月次のプリセット件数表示(`{{count}} days` 等)は i18next の複数形キー(`_one` / `_other`)を使うよう変更した。従来は週次・月次のみ `=== 1` の特別扱いがあり日次は無かったため、日次プリセット(3/7/14日)には実質差分は無いが、今後日次プリセットに1日が追加された場合でも複数形が自動的に正しく処理される。
+- 開発者向けヒント文(ローカル環境での初回プロンプト再テスト方法)は、埋め込まれた `<code>` 要素(キー名・JSON行名)の位置は変えず、日本語では英語と語順を入れ替えた自然な文章になるよう各断片を訳した(`devHintPrefix` / `devHintMiddle` / `devHintSuffix` / `devHintEnd`)。`Trans` コンポーネントは本リポジトリで未使用のため、既存の断片結合パターンを踏襲した。
+
+他の設定画面(`CompanySettings.tsx`・`PipelineSettings.tsx`・`PluginSettings.tsx`・`InstanceExperimentalSettings.tsx` 等)は未着手。
 
 ## 6. 用語集
 

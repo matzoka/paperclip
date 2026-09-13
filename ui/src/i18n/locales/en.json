@@ -44,6 +44,76 @@
       "title": "Language",
       "description": "Choose the language used across the Paperclip interface. Screens that aren't translated yet fall back to English.",
       "label": "Display language"
+    },
+    "instanceGeneral": {
+      "title": "General",
+      "updateError": "Failed to update general settings.",
+      "loading": "Loading general settings...",
+      "loadError": "Failed to load general settings.",
+      "signOutError": "Failed to sign out.",
+      "topics": {
+        "logDisplay": "log display",
+        "keyboardShortcuts": "keyboard shortcuts",
+        "backupRetention": "backup retention",
+        "dataSharing": "data sharing"
+      },
+      "description": "Configure instance-wide preferences including {{topics}}.",
+      "descriptionNoTopics": "Configure instance-wide preferences.",
+      "deployment": {
+        "title": "Deployment and auth",
+        "localTrusted": "Local trusted mode is optimized for a local operator. Browser requests run as local board context and no sign-in is required.",
+        "authenticatedPublic": "Authenticated public mode requires sign-in for board access and is intended for public URLs.",
+        "authenticatedPrivate": "Authenticated private mode requires sign-in and is intended for LAN, VPN, or other private-network deployments.",
+        "authReadinessLabel": "Auth readiness",
+        "bootstrapStatusLabel": "Bootstrap status",
+        "bootstrapInviteLabel": "Bootstrap invite",
+        "ready": "Ready",
+        "notReady": "Not ready",
+        "setupRequired": "Setup required",
+        "active": "Active",
+        "none": "None"
+      },
+      "censorUsername": {
+        "title": "Censor username in logs",
+        "description": "Hide the username segment in home-directory paths and similar operator-visible log output. Standalone username mentions outside of paths are not yet masked in the live transcript view. This is off by default."
+      },
+      "keyboardShortcuts": {
+        "title": "Keyboard shortcuts",
+        "description": "Enable app keyboard shortcuts, including inbox navigation and global shortcuts like creating tasks or toggling panels. This is off by default."
+      },
+      "backupRetention": {
+        "title": "Backup retention",
+        "description": "Configure how long automatic database backups are retained. Backups run roughly every hour and are compressed with gzip. Within the daily window all backups are kept; beyond that, one backup per week and one per month are preserved.",
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "monthly": "Monthly",
+        "daysCount_one": "{{count}} day",
+        "daysCount_other": "{{count}} days",
+        "weeksCount_one": "{{count}} week",
+        "weeksCount_other": "{{count}} weeks",
+        "monthsCount_one": "{{count}} month",
+        "monthsCount_other": "{{count}} months"
+      },
+      "feedbackSharing": {
+        "title": "AI feedback sharing",
+        "description": "Control whether thumbs up and thumbs down votes can send the voted AI output to Paperclip Labs. Votes are always saved locally.",
+        "termsLink": "Read our terms of service",
+        "noDefaultYet": "No default is saved yet. The next thumbs up or thumbs down choice will ask once and then save the answer here.",
+        "allowLabel": "Always allow",
+        "allowDescription": "Share voted AI outputs automatically.",
+        "disallowLabel": "Don't allow",
+        "disallowDescription": "Keep voted AI outputs local only.",
+        "devHintPrefix": "To retest the first-use prompt in local dev, remove the",
+        "devHintMiddle": "key from the",
+        "devHintSuffix": "JSON row for this instance, or set it back to",
+        "devHintEnd": ". Unset and \"prompt\" both mean no default has been chosen yet."
+      },
+      "signOut": {
+        "title": "Sign out",
+        "description": "Sign out of this Paperclip instance. You will be redirected to the login page.",
+        "pending": "Signing out...",
+        "action": "Sign out"
+      }
     }
   }
 }

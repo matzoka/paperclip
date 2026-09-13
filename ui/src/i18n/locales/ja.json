@@ -44,6 +44,73 @@
       "title": "言語",
       "description": "Paperclipの表示言語を選択します。未翻訳の画面は英語で表示されます。",
       "label": "表示言語"
+    },
+    "instanceGeneral": {
+      "title": "全般",
+      "updateError": "全般設定の更新に失敗しました。",
+      "loading": "全般設定を読み込み中...",
+      "loadError": "全般設定の読み込みに失敗しました。",
+      "signOutError": "サインアウトに失敗しました。",
+      "topics": {
+        "logDisplay": "ログ表示",
+        "keyboardShortcuts": "キーボードショートカット",
+        "backupRetention": "バックアップ保持",
+        "dataSharing": "データ共有"
+      },
+      "description": "{{topics}}など、インスタンス全体の設定を行います。",
+      "descriptionNoTopics": "インスタンス全体の設定を行います。",
+      "deployment": {
+        "title": "デプロイと認証",
+        "localTrusted": "ローカル信頼モードはローカル操作者向けに最適化されています。ブラウザからのリクエストはローカルのボードコンテキストとして扱われ、サインインは不要です。",
+        "authenticatedPublic": "認証必須の公開モードでは、ボードへのアクセスにサインインが必要です。インターネットに公開するURL向けの構成です。",
+        "authenticatedPrivate": "認証必須の非公開モードでは、サインインが必要です。LAN、VPN、その他のプライベートネットワークでの運用を想定しています。",
+        "authReadinessLabel": "認証準備状況",
+        "bootstrapStatusLabel": "初期セットアップ状況",
+        "bootstrapInviteLabel": "初期セットアップ招待",
+        "ready": "準備完了",
+        "notReady": "未準備",
+        "setupRequired": "セットアップが必要です",
+        "active": "有効",
+        "none": "なし"
+      },
+      "censorUsername": {
+        "title": "ログ内のユーザー名を伏せる",
+        "description": "ホームディレクトリのパスなど、操作者に見えるログ出力内のユーザー名部分を非表示にします。ライブトランスクリプト表示では、パス以外に単独で出現するユーザー名はまだマスクされません。デフォルトでは無効です。"
+      },
+      "keyboardShortcuts": {
+        "title": "キーボードショートカット",
+        "description": "受信箱の移動や、タスク作成・パネル切り替えなどのグローバルショートカットを含む、アプリのキーボードショートカットを有効にします。デフォルトでは無効です。"
+      },
+      "backupRetention": {
+        "title": "バックアップの保持期間",
+        "description": "自動データベースバックアップの保持期間を設定します。バックアップはおよそ1時間ごとに実行され、gzipで圧縮されます。日次保持期間内はすべてのバックアップが保持され、それ以降は週に1件、月に1件のバックアップが保持されます。",
+        "daily": "日次",
+        "weekly": "週次",
+        "monthly": "月次",
+        "daysCount_other": "{{count}}日",
+        "weeksCount_other": "{{count}}週間",
+        "monthsCount_other": "{{count}}ヶ月"
+      },
+      "feedbackSharing": {
+        "title": "AIフィードバックの共有",
+        "description": "高評価・低評価の投票について、投票されたAI出力をPaperclip Labsへ送信するかどうかを制御します。投票内容は常にローカルに保存されます。",
+        "termsLink": "利用規約を読む",
+        "noDefaultYet": "まだデフォルト設定は保存されていません。次に高評価または低評価を選択すると一度だけ確認が表示され、その回答がここに保存されます。",
+        "allowLabel": "常に許可する",
+        "allowDescription": "投票されたAI出力を自動的に共有します。",
+        "disallowLabel": "許可しない",
+        "disallowDescription": "投票されたAI出力をローカルのみに保持します。",
+        "devHintPrefix": "ローカル開発環境で初回表示の確認プロンプトを再テストするには、",
+        "devHintMiddle": "というキーを、このインスタンスの",
+        "devHintSuffix": "のJSON行から削除するか、",
+        "devHintEnd": "に戻してください。未設定と\"prompt\"はどちらも、まだデフォルトが選択されていないことを意味します。"
+      },
+      "signOut": {
+        "title": "サインアウト",
+        "description": "このPaperclipインスタンスからサインアウトします。ログインページへリダイレクトされます。",
+        "pending": "サインアウト中...",
+        "action": "サインアウト"
+      }
     }
   }
 }

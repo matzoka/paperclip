@@ -136,6 +136,39 @@
 - 優先順位4以降は引き続き未着手(Stage 6以降で対応予定)。
 - 共通パンくず兄弟ラベル・`interaction-audience.ts` の残課題は従来どおり据え置き。
 
+**(2026-09-13追記, MATZ-13・Squad方式 Stage 2)** MATZ-27(Stage 1)のチェックポイントcommit `b9915d2a1` から継続し、`PipelineSettings.tsx` のStage詳細エディタのうち「Instructions/Automation」タブ本体(`activeStageSection === "instructions"` の範囲)を翻訳した。Secrets・Advanced(Transitions/Children)・Activity・History の各タブ、`StageSubSidebar` のタブナビゲーション自体(共通ラベル、次工程でまとめて対応)、および「Delete stage」ダイアログは、Issue説明文の指示どおりMATZ-14へ意図的に残した。
+
+- 新規キー `settings.pipeline.stageEditor.*` を追加(`stageKind.*`・`executionWorkspaceOptions.*`・`toolbar.*`・`fields.*`・`automation.*`・`variableTokens.*`・`breakdown.*`)。
+- 対象にした具体的な範囲:
+  - Stageツールバー: 「新規登録を一時停止/再開」ボタン、「Delete {stage name}」ボタン(title/aria-label)。
+  - Stage基本設定: Name、Step type(ドロップダウンの選択肢ラベル・説明文を含む)、Review時のApprover選択(placeholder/noneLabel/検索/空状態)、Review outcomes(承認/却下/修正依頼の移動先セレクト、修正依頼・却下時のメモ要求トグル、移動先未設定時のヒント)。
+  - Automation本体: 「アイテムがこのステップに入ったとき」〜担当エージェント選択〜「この指示を実行し次のステップへ進める」の文、Project context(プロジェクト/ワークスペース選択、フォールバック表示、既定ワークスペース未設定時のヒント)、Execution workspace(モード選択肢・既存ワークスペース選択・新規作成/既定ワークスペース表示・再利用元の表示・保存前チェックのヒント)、Issue titleフィールドとその変数トークンヘルパー、breakdown有効時の「エージェントは何を判断すべきか」見出し、Instructionsエディタのプレースホルダー(通常時/分割時)、自動化未設定時のEmptyStateメッセージ。
+  - 変数トークンヘルパー(`AutomationVariableTokenHelper`/`CarriedFieldTokenHelper`、いずれも本ファイル内で定義されたローカルコンポーネント): デフォルトラベル「Available variables」、「Already available on child items」、トークン挿入ボタンのtitle/aria-label、変数グループ名(Pipeline and stage/Current item/Item fields)、各変数のlabel/description(Pipeline ID/key/name、Stage ID/key/name、Item title/body/ID/key/title alias/version)、プレビューtitleの「Example: …」「From …」。`buildAutomationVariableGroups()`・`automationVariablePreviewTitle()` はモジュールスコープの関数のため、コンポーネント側の `t` を引数として渡す方式にした(`RoutineVariablesEditor`/`RoutineVariablesHint` はこのファイル外の共有コンポーネントで他の未翻訳画面からも使われているため、本工程では対象外のまま残した)。
+  - Break into smaller pieces(breakdownSettingsCard、`activeStageSection === "instructions"` 内でレンダリングされるため本工程の対象と判断): タイトル・説明・トグル、各設定行(作成先パイプライン/開始ステージ/呼び方/Carry over/移動先/Wait)のラベル・placeholder・aria-label・ヒント文、"selected"/"selected pipeline"/"destination"/"existing workspace" 等のフォールバック文言。
+  - `STAGE_KIND_OPTIONS`・`STAGE_EXECUTION_WORKSPACE_OPTIONS` はモジュールスコープの定数から `buildStageKindOptions(t)`/`buildExecutionWorkspaceOptions(t)` 関数へ変更し、コンポーネント内で `useMemo(() => …, [t])` として都度生成する方式にした(`ui/src/lib/interaction-audience.ts` の `resolverPolicyLabels()` と同様の「モジュールスコープの定数を遅延評価関数へ変える」パターンを踏襲。ただしこのファイルはコンポーネント内に hook 由来の `t` を既に持つため、シングルトン `t()` のインポートではなく引数渡しを選んだ)。
+- 意図的に対象外とした範囲(次工程 MATZ-14の担当範囲):
+  - `StageSubSidebar` のタブナビゲーション(Automation/Advanced/Secrets/Activity/Historyの共通ラベル一式、"Stage section(s)")。MATZ-27に続き、一部だけ翻訳すると表記が揺れるため今回も触れていない。
+  - `activeStageSection === "advanced"` の中身(Transitions: 「Strictly enforce transitions」トグルとその説明文、`transitionTargetsControl`(Allowed next steps一覧、"Always available"ラベル)/ Children: Block children・Advance childrenの各トグルと説明文)。
+  - `activeStageSection === "secrets"` / `"activity"` / `"history"` の中身(それぞれ別コンポーネント `StageSecretsPanel`/`StageEventsList`/`PipelineStageHistoryPanel` 経由)。
+  - 「Delete stage」ダイアログ一式(タイトル・本文・"Move existing items to"・ボタン)。Issue説明文が「最終ダイアログは後続Issueへ残す」と明記しているため。
+- 用語: 「Piece」を新規に「ピース」と訳し、用語集に追加(§6参照)。「this case」は本ファイル内で既存の「item(アイテム)」と同一概念を指すため、新語を導入せず「このアイテム」に統一した。
+
+### テスト結果(MATZ-13)
+
+- 依存関係インストール: `pnpm install --no-frozen-lockfile`(前回同様、このNode 22.23.2サンドボックスでは `--frozen-lockfile` 不可)。`pnpm-lock.yaml` はテスト実行後 `git checkout --` で復元し、未commitのまま維持。
+- `ui`: `npx vitest run src/pages/PipelineSettings.test.ts src/i18n` → 全24件pass。
+- `ui`: `npx tsc -b` → エラーなし。
+- `pnpm run i18n:scan` → `PipelineSettings.tsx` の検出件数は46件→12件に減少。残り12件はすべて上記「意図的に対象外とした範囲」(`StageSubSidebar`・Advanced内Transitions/Children・Delete stageダイアログ)に属することを `--json` 出力で確認済み。
+- 全ロケールJSON構文確認: 全40ロケールでパース成功を確認。
+- 新規追加キーの棚卸し: `settings.pipeline.stageEditor.*` の全キーがコード側から参照されていることを確認(モジュールスコープの `tokens` 変数によるテンプレートリテラル参照分を含む)。
+- モノレポ全体の `pnpm test`/`pnpm typecheck` は今回も未実施(前回までと同様の理由)。今回の変更は1ファイル+ロケールJSON2件+本ドキュメントのみのため、対象を絞った実行で十分と判断した。
+
+### 未完了範囲(次の作業、MATZ-13完了時点)
+
+- 優先順位3の残り: `PipelineSettings.tsx` のStage詳細エディタのうち、Secrets・Advanced(Transitions/Children)・Activity・History・`StageSubSidebar`タブナビゲーション・Delete stageダイアログ(Stage 3: MATZ-14が対象)。`PluginSettings.tsx`(Stage 4: MATZ-15)・`InstanceExperimentalSettings.tsx`(Stage 5: MATZ-16)は未着手。
+- 優先順位4以降は引き続き未着手(Stage 6以降で対応予定)。
+- 共通パンくず兄弟ラベル・`interaction-audience.ts` の残課題は従来どおり据え置き。
+
 ## 6. 用語集
 
 Paperclip内での意味を確認した上で選定した日本語訳。表記揺れを避けるため、新しい画面を翻訳する際は必ずこの表を参照する。
@@ -155,6 +188,7 @@ Paperclip内での意味を確認した上で選定した日本語訳。表記�
 | Skill | スキル | — |
 | Pipeline | パイプライン | — |
 | Stage | ステージ | UI見出しの序数表示(例: "Step 1")は「ステップ」を使う。操作動詞を伴う名詞(Add/Delete/Insert stage等)は「ステージ」で統一。 |
+| Piece | ピース | Stageの「Break into smaller pieces(小さな単位に分割)」機能が生成する分割単位。ユーザーが呼び方をカスタマイズできる項目(`breakdownPieceNoun`)自体は訳さないが、固定文言側は「ピース」で統一(MATZ-13)。 |
 
 製品固有概念として英語表記の方が理解しやすい場合(Issue, Run, Todo等)は無理に訳さない。今後、新しい概念語が出てきた場合はこの表に追記すること。
 

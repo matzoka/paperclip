@@ -1,9 +1,384 @@
 {
   "app": {
+    "breadcrumbs": {
+      "settings": "Settings"
+    },
     "noCompanies": {
       "title": "Create your first organization",
       "description": "Get started by creating an organization.",
       "newCompany": "New Organization"
+    },
+    "cloudCreateUnavailable": "Organizations are created in Paperclip Cloud. This instance can't reach it right now — try again from your Cloud portfolio.",
+    "onboardingRoute": {
+      "titleAddAgent": "Add another agent to {{companyName}}",
+      "titleAnotherOrg": "Create another organization",
+      "descriptionAddAgent": "Run onboarding again to add an agent and a starter task for this organization.",
+      "descriptionAnotherOrg": "Run onboarding again to create another organization and seed its first agent.",
+      "descriptionFirstOrg": "Get started by creating an organization and your first agent.",
+      "addAgentButton": "Add Agent",
+      "startOnboardingButton": "Start Onboarding"
+    },
+    "interactionAudience": {
+      "policyLabels": {
+        "anyone": "Anyone",
+        "notCreator": "Anyone except creator",
+        "humanOnly": "Human only"
+      }
+    }
+  },
+  "settings": {
+    "profile": {
+      "title": "Profile",
+      "description": "Control how your account appears in the sidebar and other board surfaces.",
+      "loading": "Loading profile...",
+      "loadError": "Failed to load profile.",
+      "changePhoto": "Change photo",
+      "uploadPhoto": "Upload photo",
+      "remove": "Remove",
+      "uploadHintWithCompany": "Stored in Paperclip file storage for {{companyName}}.",
+      "uploadHintNoCompany": "Select an organization to upload an avatar into Paperclip storage.",
+      "noEmail": "No email",
+      "clickAvatarHint": "Click the avatar to upload a new image. {{uploadHint}}",
+      "displayNameLabel": "Display name",
+      "displayNameHint": "Shown in the sidebar account footer and comment author surfaces.",
+      "emailLabel": "Email",
+      "emailHint": "Email is managed by your auth session and is read-only here.",
+      "save": "Save profile",
+      "saving": "Saving...",
+      "avatarSelectOrgError": "Select an organization before uploading a profile avatar.",
+      "avatarUpdateError": "Failed to update profile.",
+      "avatarUploadError": "Failed to upload avatar.",
+      "avatarRemoveError": "Failed to remove avatar."
+    },
+    "language": {
+      "title": "Language",
+      "description": "Choose the language used across the Paperclip interface. Screens that aren't translated yet fall back to English.",
+      "label": "Display language"
+    },
+    "instanceGeneral": {
+      "title": "General",
+      "updateError": "Failed to update general settings.",
+      "loading": "Loading general settings...",
+      "loadError": "Failed to load general settings.",
+      "signOutError": "Failed to sign out.",
+      "topics": {
+        "logDisplay": "log display",
+        "keyboardShortcuts": "keyboard shortcuts",
+        "backupRetention": "backup retention",
+        "dataSharing": "data sharing"
+      },
+      "description": "Configure instance-wide preferences including {{topics}}.",
+      "descriptionNoTopics": "Configure instance-wide preferences.",
+      "deployment": {
+        "title": "Deployment and auth",
+        "localTrusted": "Local trusted mode is optimized for a local operator. Browser requests run as local board context and no sign-in is required.",
+        "authenticatedPublic": "Authenticated public mode requires sign-in for board access and is intended for public URLs.",
+        "authenticatedPrivate": "Authenticated private mode requires sign-in and is intended for LAN, VPN, or other private-network deployments.",
+        "authReadinessLabel": "Auth readiness",
+        "bootstrapStatusLabel": "Bootstrap status",
+        "bootstrapInviteLabel": "Bootstrap invite",
+        "ready": "Ready",
+        "notReady": "Not ready",
+        "setupRequired": "Setup required",
+        "active": "Active",
+        "none": "None"
+      },
+      "censorUsername": {
+        "title": "Censor username in logs",
+        "description": "Hide the username segment in home-directory paths and similar operator-visible log output. Standalone username mentions outside of paths are not yet masked in the live transcript view. This is off by default."
+      },
+      "keyboardShortcuts": {
+        "title": "Keyboard shortcuts",
+        "description": "Enable app keyboard shortcuts, including inbox navigation and global shortcuts like creating tasks or toggling panels. This is off by default."
+      },
+      "backupRetention": {
+        "title": "Backup retention",
+        "description": "Configure how long automatic database backups are retained. Backups run roughly every hour and are compressed with gzip. Within the daily window all backups are kept; beyond that, one backup per week and one per month are preserved.",
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "monthly": "Monthly",
+        "daysCount_one": "{{count}} day",
+        "daysCount_other": "{{count}} days",
+        "weeksCount_one": "{{count}} week",
+        "weeksCount_other": "{{count}} weeks",
+        "monthsCount_one": "{{count}} month",
+        "monthsCount_other": "{{count}} months"
+      },
+      "feedbackSharing": {
+        "title": "AI feedback sharing",
+        "description": "Control whether thumbs up and thumbs down votes can send the voted AI output to Paperclip Labs. Votes are always saved locally.",
+        "termsLink": "Read our terms of service",
+        "noDefaultYet": "No default is saved yet. The next thumbs up or thumbs down choice will ask once and then save the answer here.",
+        "allowLabel": "Always allow",
+        "allowDescription": "Share voted AI outputs automatically.",
+        "disallowLabel": "Don't allow",
+        "disallowDescription": "Keep voted AI outputs local only.",
+        "devHintPrefix": "To retest the first-use prompt in local dev, remove the",
+        "devHintMiddle": "key from the",
+        "devHintSuffix": "JSON row for this instance, or set it back to",
+        "devHintEnd": ". Unset and \"prompt\" both mean no default has been chosen yet."
+      },
+      "signOut": {
+        "title": "Sign out",
+        "description": "Sign out of this Paperclip instance. You will be redirected to the login page.",
+        "pending": "Signing out...",
+        "action": "Sign out"
+      }
+    },
+    "company": {
+      "title": "General",
+      "noOrgSelected": "No organization selected. Select an organization from the switcher above.",
+      "general": {
+        "sectionTitle": "General",
+        "orgNameLabel": "Organization name",
+        "orgNameHint": "The display name for your organization.",
+        "renameHint": "Renaming can change this company's task ID prefix. Existing task IDs are renumbered and old task links stop resolving.",
+        "descriptionLabel": "Description",
+        "descriptionHint": "Optional description shown in the organization profile.",
+        "descriptionPlaceholder": "Optional organization description"
+      },
+      "appearance": {
+        "sectionTitle": "Appearance",
+        "logoLabel": "Logo",
+        "logoHint": "Upload a PNG, JPEG, WEBP, GIF, or SVG logo image.",
+        "removeLogo": "Remove logo",
+        "removing": "Removing...",
+        "uploading": "Uploading logo...",
+        "uploadFailed": "Logo upload failed"
+      },
+      "save": "Save changes",
+      "saving": "Saving...",
+      "saved": "Saved",
+      "saveFailed": "Failed to save",
+      "hiring": {
+        "sectionTitle": "Hiring",
+        "requireApprovalLabel": "Require board approval for new hires",
+        "requireApprovalHint": "New agent hires stay pending until approved by board."
+      },
+      "dangerZone": {
+        "sectionTitle": "Danger Zone",
+        "description": "Archive this organization to hide it from the sidebar. This persists in the database.",
+        "archiveButton": "Archive organization",
+        "archiving": "Archiving...",
+        "alreadyArchived": "Already archived",
+        "archiveFailed": "Failed to archive organization",
+        "archiveConfirm": "Archive organization \"{{name}}\"? It will be hidden from the sidebar."
+      },
+      "governance": {
+        "sectionTitle": "Interaction governance",
+        "kindLabels": {
+          "suggestTasks": "Suggested tasks",
+          "askUserQuestions": "Ask user questions",
+          "requestConfirmation": "Confirmations",
+          "requestCheckboxConfirmation": "Checkbox confirmations",
+          "requestItemVerdicts": "Item verdicts",
+          "connectionIntent": "Connection requests"
+        },
+        "unsetDefaultPolicyLabel": "Anyone (default)",
+        "unsetCapLabel": "No cap",
+        "unsetDefaultPolicyEffect": "New cards are open — the board or any agent can respond, including the one that asked.",
+        "unsetCapEffect": "A request keeps whatever audience it asks for.",
+        "defaultPolicyEffect": {
+          "notCreator": "New cards exclude the agent that created them, so the answer comes from someone else.",
+          "humanOnly": "New cards wait for a person on the board. Agents are turned away."
+        },
+        "capEffect": {
+          "notCreator": "Even a card that asks for Anyone is narrowed to exclude its creator.",
+          "humanOnly": "Every card of this kind waits for a person, whatever it asked for."
+        },
+        "columnKind": "Kind",
+        "columnDefaultPolicy": "Default policy",
+        "columnCap": "Cap",
+        "ariaDefaultFor": "Default resolver audience for {{kind}}",
+        "ariaCapFor": "Resolver cap for {{kind}}",
+        "introPrefix": "Thread interactions are open by default:",
+        "introAnyone": "Anyone",
+        "introMiddle": "in the organization — the board or any agent, including the one that asked — can respond. Narrow a kind only when you need to.",
+        "introDefaultPolicyEffect": "is the audience new cards get when the requester does not ask for one;",
+        "introCapEffect": "narrows every request of that kind and can never widen one. Tool-approval confirmations always stay",
+        "errorFailedToSave": "Failed to save interaction governance"
+      }
+    },
+    "pipeline": {
+      "breadcrumb": "Pipelines",
+      "guards": {
+        "selectOrganization": "Select an organization to edit pipeline settings.",
+        "noPipelineSelected": "No pipeline selected.",
+        "notFound": "Pipeline not found."
+      },
+      "header": {
+        "backToBoard": "Back to board",
+        "actionsMenuTitle": "Pipeline actions",
+        "restore": "Restore pipeline",
+        "nameLabel": "Pipeline name",
+        "descriptionLabel": "Pipeline description",
+        "descriptionPlaceholder": "Add a description",
+        "save": "Save details",
+        "saving": "Saving..."
+      },
+      "stageList": {
+        "empty": "No stages configured.",
+        "addFirstStage": "Add first stage",
+        "stepLabel": "Step {{number}}",
+        "newEntriesPaused": "New entries paused",
+        "viewQueue": "View queue",
+        "insertStageAfter": "Insert stage after {{name}}",
+        "warningsCount_one": "{{count}} warning",
+        "warningsCount_other": "{{count}} warnings",
+        "stageAriaLabelWithWarnings_one": "{{name}}, {{count}} warning",
+        "stageAriaLabelWithWarnings_other": "{{name}}, {{count}} warnings"
+      },
+      "toast": {
+        "pipelineUpdated": "Pipeline updated",
+        "stageAdded": "Stage added",
+        "pipelineRestored": "Pipeline restored"
+      },
+      "archive": {
+        "title": "Archive pipeline",
+        "description": "Archiving hides this pipeline from everyday views. Its stages and items are kept and can be restored later.",
+        "confirmLabel": "Type {{name}} to confirm",
+        "confirmAriaLabel": "Archive confirmation",
+        "cancel": "Cancel",
+        "pending": "Archiving..."
+      },
+      "stageEditor": {
+        "stageKind": {
+          "working": {
+            "label": "Working",
+            "description": "Items wait here while work happens. An agent or a person moves them forward."
+          },
+          "review": {
+            "label": "Review",
+            "description": "Someone has to approve before items leave. Use this when a person or an agent has to say yes or no."
+          },
+          "done": {
+            "label": "Done",
+            "description": "The final step. Items that reach here are finished."
+          },
+          "cancelled": {
+            "label": "Cancelled",
+            "description": "The dead end. Items that reach here are dropped or rejected."
+          }
+        },
+        "executionWorkspaceOptions": {
+          "sharedWorkspace": "Project default",
+          "isolatedWorkspace": "New isolated workspace",
+          "reuseExisting": "Reuse existing workspace"
+        },
+        "toolbar": {
+          "resumeNewEntries": "Resume new entries",
+          "pauseNewEntries": "Pause new entries",
+          "deleteStage": "Delete {{name}}"
+        },
+        "fields": {
+          "name": "Name",
+          "stepType": "Step type",
+          "approver": "Approver",
+          "anyHuman": "Any human",
+          "searchApprovers": "Search approvers...",
+          "noApproversFound": "No approvers found.",
+          "reviewOutcomes": "Review outcomes",
+          "approvedMoveTo": "Approved items move to",
+          "declinedMoveTo": "Declined items move to",
+          "needingChangesMoveTo": "Items needing changes move to",
+          "chooseStage": "Choose a stage",
+          "stayInReview": "Stay in review",
+          "askNoteRequestingChanges": "Ask for a note when requesting changes",
+          "askNoteDeclining": "Ask for a note when declining",
+          "reviewTargetsMissingHint": "Pick where approved and declined items should go before saving."
+        },
+        "automation": {
+          "whenItemEnters": "When an item enters this step",
+          "pickAgent": "Pick agent",
+          "noAutomation": "No automation",
+          "searchAgents": "Search agents...",
+          "noAgentsFound": "No agents found.",
+          "runsInstructionsSuffix": "runs these instructions, then moves the item to the next step.",
+          "projectContext": "Project context",
+          "project": "Project",
+          "noProject": "No project",
+          "searchProjects": "Search projects...",
+          "noProjectsFound": "No projects found.",
+          "projectFallback": "Project fallback",
+          "projectWorkspace": "Project workspace",
+          "primaryTag": "primary",
+          "noWorkspaceDefaultHint": "This project has no saved workspace default. Paperclip will use the project fallback when automation runs.",
+          "executionWorkspace": "Execution workspace",
+          "executionWorkspaceMode": "Execution workspace mode",
+          "existingExecutionWorkspace": "Existing execution workspace",
+          "chooseExistingWorkspace": "Choose an existing workspace",
+          "newWorkspaceWillBeCreated": "A new workspace will be created",
+          "projectDefaultWorkspace": "Project default workspace",
+          "reusingWorkspaceFrom": "Reusing {{name}} from {{source}}.",
+          "existingWorkspaceFallback": "existing workspace",
+          "chooseWorkspaceBeforeSaving": "Choose an existing workspace before saving reuse mode.",
+          "agentRunsAutomatically": "{{name}} runs this step automatically.",
+          "issueTitle": "Issue title",
+          "issueTitleTemplate": "Issue title template",
+          "issueTitleVariables": "Issue title variables",
+          "whatShouldAgentDecide": "What should the agent decide?",
+          "mechanicsHandledBelow": "The mechanics are handled below. Write only the judgment.",
+          "instructionsPlaceholderBreakdown": "Describe the judgment the agent should make — what counts as a piece worth splitting out?",
+          "instructionsPlaceholderDefault": "Tell the agent exactly what to do when an item enters this step...",
+          "nothingRunsAutomatically": "Nothing runs here automatically. Items wait until a person moves them, or you can pick an agent to run this step."
+        },
+        "variableTokens": {
+          "availableVariables": "Available variables",
+          "alreadyAvailableOnChildItems": "Already available on child items",
+          "insertToken": "Insert {{token}}",
+          "groupPipelineAndStage": "Pipeline and stage",
+          "groupCurrentItem": "Current item",
+          "groupItemFields": "Item fields",
+          "pipelineId": { "label": "Pipeline ID", "description": "ID of the pipeline this automation runs in." },
+          "pipelineKey": { "label": "Pipeline key", "description": "Stable key of the pipeline this automation runs in." },
+          "pipelineName": { "label": "Pipeline name", "description": "Display name of the pipeline this automation runs in." },
+          "stageId": { "label": "Stage ID", "description": "ID of this automation stage." },
+          "stageKey": { "label": "Stage key", "description": "Stable key of this automation stage." },
+          "stageName": { "label": "Stage name", "description": "Display name of this automation stage." },
+          "itemTitle": { "label": "Item title", "description": "Title of the item being automated." },
+          "itemBody": { "label": "Item body", "description": "Body text of the item being automated." },
+          "itemId": { "label": "Item ID", "description": "ID of the item being automated." },
+          "itemKey": { "label": "Item key", "description": "Stable key of the item being automated." },
+          "itemTitleAlias": { "label": "Item title alias", "description": "Compatibility alias for the item title." },
+          "itemVersion": { "label": "Item version", "description": "Current item version when the automation runs." },
+          "fieldCopiedDescription": "Field copied from the current item data.",
+          "previewExample": "Example: {{kind}}, {{size}} chars",
+          "previewFrom": "From {{source}}"
+        },
+        "breakdown": {
+          "title": "Break into smaller pieces",
+          "description": "The agent decides what the pieces are. Paperclip creates and tracks them.",
+          "createEachPieceIn": "Create each piece in",
+          "choosePipeline": "Choose a pipeline",
+          "openPipelineAria": "Open {{name}} pipeline",
+          "selectedFallback": "selected",
+          "pipelineInWorkspaceHint": "A pipeline in this workspace",
+          "startingAt": "starting at",
+          "startingStageForEachPiece": "Starting stage for each piece",
+          "stageStartHint": "The stage every new piece starts in",
+          "callEachPieceA": "Call each piece a",
+          "piecePlaceholder": "piece",
+          "drivesCopyHint": "Drives copy on this case (e.g. “3 of 5 {{plural}} finished”)",
+          "carryOver": "Carry over",
+          "carryOverHint": "Values are copied from this item and its ancestors. New eligible fields stay on unless you uncheck them.",
+          "destinationValidation": "Destination validation:",
+          "selectedPipelineFallback": "selected pipeline",
+          "reviewDestinationFields": "Review destination fields",
+          "destinationArchivedHint": "This destination pipeline is archived, so its validation fields can't be edited until it's restored.",
+          "requiredBy": "Required by {{name}}",
+          "validatedBy": "Validated by {{name}}",
+          "destinationFallback": "destination",
+          "noCarryOverFieldsHint": "This pipeline and its ancestors do not define any fields that can be carried over yet.",
+          "uniqueNameHint": "Name and title fields are kept unique for each new {{piece}}.",
+          "thenMoveThisCaseTo": "Then move this case to",
+          "stayOnThisStep": "Stay on this step",
+          "asSoonAsPiecesCreated": "As soon as the pieces are created",
+          "wait": "Wait",
+          "waitUntilAllFinished": "Wait until all {{plural}} are finished, then move it to",
+          "moveThisCaseWhenAllFinish": "Move this case when all pieces finish",
+          "stillMovesToHint": "If nothing is worth splitting, this case still moves to {{name}}."
+        }
+      }
     }
   }
 }

@@ -38,4 +38,7 @@ export const i18nextResources: Resource = Object.fromEntries(
   Object.entries(localeMessages).map(([locale, messages]) => [locale, { translation: messages }]),
 ) as Resource;
 
-export type SupportedLocale = keyof typeof localeMessages;
+// `keyof typeof localeMessages` would widen to `string | number` (an index
+// signature makes numeric-like keys valid too); `Extract` narrows it back to
+// the string literal union callers actually need.
+export type SupportedLocale = Extract<keyof typeof localeMessages, string>;

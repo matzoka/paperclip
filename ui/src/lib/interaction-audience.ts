@@ -27,6 +27,7 @@ import {
   type IssueThreadInteractionResolverPolicy,
   type IssueThreadInteractionResolverPolicyProvenance,
 } from "@paperclipai/shared";
+import { t } from "../i18n";
 import type { IssueThreadInteraction } from "./issue-thread-interactions";
 
 /**
@@ -35,12 +36,21 @@ import type { IssueThreadInteraction } from "./issue-thread-interactions";
  */
 export const DEFAULT_RESOLVER_POLICY: IssueThreadInteractionCanonicalResolverPolicy = "anyone";
 
-/** Short label for a resolver audience — badges, select options, table cells. */
-const RESOLVER_POLICY_LABELS: Record<IssueThreadInteractionCanonicalResolverPolicy, string> = {
-  anyone: "Anyone",
-  not_creator: "Anyone except creator",
-  human_only: "Human only",
-};
+/**
+ * Short label for a resolver audience — badges, select options, table cells.
+ * Read lazily (function, not a module-level constant) so a locale switch
+ * after init is picked up on the next render instead of freezing at the
+ * language active when this module first loaded.
+ */
+function resolverPolicyLabels(): Record<IssueThreadInteractionCanonicalResolverPolicy, string> {
+  return {
+    anyone: t("app.interactionAudience.policyLabels.anyone", { defaultValue: "Anyone" }),
+    not_creator: t("app.interactionAudience.policyLabels.notCreator", {
+      defaultValue: "Anyone except creator",
+    }),
+    human_only: t("app.interactionAudience.policyLabels.humanOnly", { defaultValue: "Human only" }),
+  };
+}
 
 /**
  * Plain-language preview of what a policy *does*, phrased for a surface that is
@@ -58,7 +68,7 @@ const RESOLVER_POLICY_EFFECTS: Record<IssueThreadInteractionCanonicalResolverPol
 
 /** Accepts canonical values and the deprecated `board_*` compatibility aliases. */
 export function resolverPolicyLabel(policy: IssueThreadInteractionResolverPolicy): string {
-  return RESOLVER_POLICY_LABELS[normalizeIssueThreadInteractionResolverPolicy(policy)];
+  return resolverPolicyLabels()[normalizeIssueThreadInteractionResolverPolicy(policy)];
 }
 
 /** Accepts canonical values and the deprecated `board_*` compatibility aliases. */
@@ -78,7 +88,7 @@ export const RESOLVER_POLICY_CHOICES: readonly {
   isDefault: boolean;
 }[] = ISSUE_THREAD_INTERACTION_CANONICAL_RESOLVER_POLICIES.map((value) => ({
   value,
-  label: RESOLVER_POLICY_LABELS[value],
+  label: resolverPolicyLabels()[value],
   effect: RESOLVER_POLICY_EFFECTS[value],
   isDefault: value === DEFAULT_RESOLVER_POLICY,
 }));
@@ -222,7 +232,7 @@ export function describeResolverAudience({
   const narrowedNote = source === "governed_action"
     ? "This card runs a governed action, so it stays human-only whatever audience was requested."
     : source === "company_cap"
-      ? `Organization interaction governance narrowed this from ${RESOLVER_POLICY_LABELS[requestedPolicy]} to ${RESOLVER_POLICY_LABELS[policy]}.`
+      ? `Organization interaction governance narrowed this from ${resolverPolicyLabels()[requestedPolicy]} to ${resolverPolicyLabels()[policy]}.`
       : provenance === "legacy_inherited_restriction"
         ? "Created before Anyone became the default, so it stays restricted. A new card would be open."
         : null;
@@ -247,7 +257,7 @@ export function describeResolverAudience({
     // agent addressee, while a user addressee is the narrower human audience.
     label: (policy !== "human_only" || isUserAddressee) && hasAddressee
       ? "Addressed"
-      : RESOLVER_POLICY_LABELS[policy],
+      : resolverPolicyLabels()[policy],
     summary,
     shortSummary,
     isOpen: policy === "anyone" && !hasAddressee,

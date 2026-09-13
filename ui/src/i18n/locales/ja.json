@@ -1,9 +1,379 @@
 {
   "app": {
+    "breadcrumbs": {
+      "settings": "設定"
+    },
     "noCompanies": {
       "title": "最初の会社を作成",
       "description": "会社を作成して始めましょう。",
       "newCompany": "新しい会社"
+    },
+    "cloudCreateUnavailable": "会社の作成はPaperclip Cloud側で行います。現在このインスタンスからCloudに接続できません。Cloudのポートフォリオから再度お試しください。",
+    "onboardingRoute": {
+      "titleAddAgent": "{{companyName}}にエージェントを追加",
+      "titleAnotherOrg": "別の会社を作成",
+      "descriptionAddAgent": "オンボーディングを再実行して、この会社にエージェントと最初のタスクを追加します。",
+      "descriptionAnotherOrg": "オンボーディングを再実行して、別の会社を作成し、最初のエージェントを準備します。",
+      "descriptionFirstOrg": "会社と最初のエージェントを作成して始めましょう。",
+      "addAgentButton": "エージェントを追加",
+      "startOnboardingButton": "オンボーディングを開始"
+    },
+    "interactionAudience": {
+      "policyLabels": {
+        "anyone": "誰でも",
+        "notCreator": "作成者以外の誰でも",
+        "humanOnly": "人間のみ"
+      }
+    }
+  },
+  "settings": {
+    "profile": {
+      "title": "プロフィール",
+      "description": "サイドバーやその他のボード画面に表示されるアカウント情報を管理します。",
+      "loading": "プロフィールを読み込んでいます...",
+      "loadError": "プロフィールの読み込みに失敗しました。",
+      "changePhoto": "写真を変更",
+      "uploadPhoto": "写真をアップロード",
+      "remove": "削除",
+      "uploadHintWithCompany": "{{companyName}}のPaperclipファイルストレージに保存されます。",
+      "uploadHintNoCompany": "アバターをアップロードするには、先に組織を選択してください。",
+      "noEmail": "メールアドレス未設定",
+      "clickAvatarHint": "アバターをクリックすると新しい画像をアップロードできます。{{uploadHint}}",
+      "displayNameLabel": "表示名",
+      "displayNameHint": "サイドバーのアカウントフッターやコメントの投稿者欄に表示されます。",
+      "emailLabel": "メールアドレス",
+      "emailHint": "メールアドレスは認証セッションで管理されており、ここでは変更できません。",
+      "save": "プロフィールを保存",
+      "saving": "保存中...",
+      "avatarSelectOrgError": "プロフィール画像をアップロードする前に組織を選択してください。",
+      "avatarUpdateError": "プロフィールの更新に失敗しました。",
+      "avatarUploadError": "アバターのアップロードに失敗しました。",
+      "avatarRemoveError": "アバターの削除に失敗しました。"
+    },
+    "language": {
+      "title": "言語",
+      "description": "Paperclipの表示言語を選択します。未翻訳の画面は英語で表示されます。",
+      "label": "表示言語"
+    },
+    "instanceGeneral": {
+      "title": "全般",
+      "updateError": "全般設定の更新に失敗しました。",
+      "loading": "全般設定を読み込み中...",
+      "loadError": "全般設定の読み込みに失敗しました。",
+      "signOutError": "サインアウトに失敗しました。",
+      "topics": {
+        "logDisplay": "ログ表示",
+        "keyboardShortcuts": "キーボードショートカット",
+        "backupRetention": "バックアップ保持",
+        "dataSharing": "データ共有"
+      },
+      "description": "{{topics}}など、インスタンス全体の設定を行います。",
+      "descriptionNoTopics": "インスタンス全体の設定を行います。",
+      "deployment": {
+        "title": "デプロイと認証",
+        "localTrusted": "ローカル信頼モードはローカル操作者向けに最適化されています。ブラウザからのリクエストはローカルのボードコンテキストとして扱われ、サインインは不要です。",
+        "authenticatedPublic": "認証必須の公開モードでは、ボードへのアクセスにサインインが必要です。インターネットに公開するURL向けの構成です。",
+        "authenticatedPrivate": "認証必須の非公開モードでは、サインインが必要です。LAN、VPN、その他のプライベートネットワークでの運用を想定しています。",
+        "authReadinessLabel": "認証準備状況",
+        "bootstrapStatusLabel": "初期セットアップ状況",
+        "bootstrapInviteLabel": "初期セットアップ招待",
+        "ready": "準備完了",
+        "notReady": "未準備",
+        "setupRequired": "セットアップが必要です",
+        "active": "有効",
+        "none": "なし"
+      },
+      "censorUsername": {
+        "title": "ログ内のユーザー名を伏せる",
+        "description": "ホームディレクトリのパスなど、操作者に見えるログ出力内のユーザー名部分を非表示にします。ライブトランスクリプト表示では、パス以外に単独で出現するユーザー名はまだマスクされません。デフォルトでは無効です。"
+      },
+      "keyboardShortcuts": {
+        "title": "キーボードショートカット",
+        "description": "受信箱の移動や、タスク作成・パネル切り替えなどのグローバルショートカットを含む、アプリのキーボードショートカットを有効にします。デフォルトでは無効です。"
+      },
+      "backupRetention": {
+        "title": "バックアップの保持期間",
+        "description": "自動データベースバックアップの保持期間を設定します。バックアップはおよそ1時間ごとに実行され、gzipで圧縮されます。日次保持期間内はすべてのバックアップが保持され、それ以降は週に1件、月に1件のバックアップが保持されます。",
+        "daily": "日次",
+        "weekly": "週次",
+        "monthly": "月次",
+        "daysCount_other": "{{count}}日",
+        "weeksCount_other": "{{count}}週間",
+        "monthsCount_other": "{{count}}ヶ月"
+      },
+      "feedbackSharing": {
+        "title": "AIフィードバックの共有",
+        "description": "高評価・低評価の投票について、投票されたAI出力をPaperclip Labsへ送信するかどうかを制御します。投票内容は常にローカルに保存されます。",
+        "termsLink": "利用規約を読む",
+        "noDefaultYet": "まだデフォルト設定は保存されていません。次に高評価または低評価を選択すると一度だけ確認が表示され、その回答がここに保存されます。",
+        "allowLabel": "常に許可する",
+        "allowDescription": "投票されたAI出力を自動的に共有します。",
+        "disallowLabel": "許可しない",
+        "disallowDescription": "投票されたAI出力をローカルのみに保持します。",
+        "devHintPrefix": "ローカル開発環境で初回表示の確認プロンプトを再テストするには、",
+        "devHintMiddle": "というキーを、このインスタンスの",
+        "devHintSuffix": "のJSON行から削除するか、",
+        "devHintEnd": "に戻してください。未設定と\"prompt\"はどちらも、まだデフォルトが選択されていないことを意味します。"
+      },
+      "signOut": {
+        "title": "サインアウト",
+        "description": "このPaperclipインスタンスからサインアウトします。ログインページへリダイレクトされます。",
+        "pending": "サインアウト中...",
+        "action": "サインアウト"
+      }
+    },
+    "company": {
+      "title": "一般",
+      "noOrgSelected": "組織が選択されていません。上部の切り替えから組織を選択してください。",
+      "general": {
+        "sectionTitle": "一般",
+        "orgNameLabel": "組織名",
+        "orgNameHint": "組織の表示名です。",
+        "renameHint": "名前を変更すると、この会社のタスクIDプレフィックスが変わる場合があります。既存のタスクIDは振り直され、古いタスクリンクは無効になります。",
+        "descriptionLabel": "説明",
+        "descriptionHint": "組織プロフィールに表示される任意の説明です。",
+        "descriptionPlaceholder": "組織の説明(任意)"
+      },
+      "appearance": {
+        "sectionTitle": "外観",
+        "logoLabel": "ロゴ",
+        "logoHint": "PNG、JPEG、WEBP、GIF、SVG形式のロゴ画像をアップロードできます。",
+        "removeLogo": "ロゴを削除",
+        "removing": "削除中...",
+        "uploading": "ロゴをアップロード中...",
+        "uploadFailed": "ロゴのアップロードに失敗しました"
+      },
+      "save": "変更を保存",
+      "saving": "保存中...",
+      "saved": "保存しました",
+      "saveFailed": "保存に失敗しました",
+      "hiring": {
+        "sectionTitle": "採用",
+        "requireApprovalLabel": "新規採用にボードの承認を必須にする",
+        "requireApprovalHint": "新しいエージェントの採用は、ボードが承認するまで保留状態になります。"
+      },
+      "dangerZone": {
+        "sectionTitle": "危険な操作",
+        "description": "この組織をアーカイブすると、サイドバーから非表示になります。データベースには保持されます。",
+        "archiveButton": "組織をアーカイブ",
+        "archiving": "アーカイブ中...",
+        "alreadyArchived": "アーカイブ済み",
+        "archiveFailed": "組織のアーカイブに失敗しました",
+        "archiveConfirm": "組織「{{name}}」をアーカイブしますか?サイドバーから非表示になります。"
+      },
+      "governance": {
+        "sectionTitle": "対応ポリシー",
+        "kindLabels": {
+          "suggestTasks": "タスク提案",
+          "askUserQuestions": "ユーザーへの質問",
+          "requestConfirmation": "確認",
+          "requestCheckboxConfirmation": "チェックボックス確認",
+          "requestItemVerdicts": "項目の判定",
+          "connectionIntent": "接続リクエスト"
+        },
+        "unsetDefaultPolicyLabel": "誰でも(既定)",
+        "unsetCapLabel": "上限なし",
+        "unsetDefaultPolicyEffect": "新しいカードはオープンです — 依頼した本人を含め、ボードまたは任意のエージェントが対応できます。",
+        "unsetCapEffect": "リクエストは要求された対応範囲のまま維持されます。",
+        "defaultPolicyEffect": {
+          "notCreator": "新しいカードは作成したエージェントを除外するため、別の誰かが対応します。",
+          "humanOnly": "新しいカードはボードのメンバーの対応を待ちます。エージェントは対応できません。"
+        },
+        "capEffect": {
+          "notCreator": "「誰でも」を要求したカードでも、作成者を除外するよう制限されます。",
+          "humanOnly": "このカードは、何が要求されたかに関わらず必ず人による対応を待ちます。"
+        },
+        "columnKind": "種別",
+        "columnDefaultPolicy": "既定ポリシー",
+        "columnCap": "上限",
+        "ariaDefaultFor": "{{kind}}の既定の対応範囲",
+        "ariaCapFor": "{{kind}}の対応範囲の上限",
+        "introPrefix": "スレッドのやり取りは既定でオープンです:",
+        "introAnyone": "誰でも",
+        "introMiddle": "が組織内で対応できます — 依頼した本人を含め、ボードまたは任意のエージェントです。制限が必要な種別のみ絞り込んでください。",
+        "introDefaultPolicyEffect": "は、依頼者が対応範囲を指定しなかった場合に新しいカードへ適用される既定の対応範囲です;",
+        "introCapEffect": "はその種別のすべてのリクエストを絞り込み、決して広げることはありません。ツール承認の確認は常に",
+        "errorFailedToSave": "対応ポリシーの保存に失敗しました"
+      }
+    },
+    "pipeline": {
+      "breadcrumb": "パイプライン",
+      "guards": {
+        "selectOrganization": "パイプライン設定を編集するには組織を選択してください。",
+        "noPipelineSelected": "パイプラインが選択されていません。",
+        "notFound": "パイプラインが見つかりません。"
+      },
+      "header": {
+        "backToBoard": "ボードに戻る",
+        "actionsMenuTitle": "パイプラインの操作",
+        "restore": "パイプラインを復元",
+        "nameLabel": "パイプライン名",
+        "descriptionLabel": "パイプラインの説明",
+        "descriptionPlaceholder": "説明を追加",
+        "save": "詳細を保存",
+        "saving": "保存中..."
+      },
+      "stageList": {
+        "empty": "ステージが設定されていません。",
+        "addFirstStage": "最初のステージを追加",
+        "stepLabel": "ステップ {{number}}",
+        "newEntriesPaused": "新規登録を停止中",
+        "viewQueue": "キューを表示",
+        "insertStageAfter": "{{name}}の後にステージを挿入",
+        "warningsCount_other": "警告{{count}}件",
+        "stageAriaLabelWithWarnings_other": "{{name}}(警告{{count}}件)"
+      },
+      "toast": {
+        "pipelineUpdated": "パイプラインを更新しました",
+        "stageAdded": "ステージを追加しました",
+        "pipelineRestored": "パイプラインを復元しました"
+      },
+      "archive": {
+        "title": "パイプラインをアーカイブ",
+        "description": "アーカイブすると、このパイプラインは通常の画面から非表示になります。ステージとアイテムは保持され、後で復元できます。",
+        "confirmLabel": "確認のため {{name}} と入力してください",
+        "confirmAriaLabel": "アーカイブの確認",
+        "cancel": "キャンセル",
+        "pending": "アーカイブ中..."
+      },
+      "stageEditor": {
+        "stageKind": {
+          "working": {
+            "label": "作業中",
+            "description": "ここで作業が行われている間、アイテムは待機します。エージェントまたは人が次のステップへ進めます。"
+          },
+          "review": {
+            "label": "レビュー",
+            "description": "アイテムがこのステップを離れる前に承認が必要です。人またはエージェントが可否を判断する場合に使用します。"
+          },
+          "done": {
+            "label": "完了",
+            "description": "最終ステップです。ここに到達したアイテムは完了となります。"
+          },
+          "cancelled": {
+            "label": "キャンセル",
+            "description": "行き止まりのステップです。ここに到達したアイテムは破棄または却下されます。"
+          }
+        },
+        "executionWorkspaceOptions": {
+          "sharedWorkspace": "プロジェクトの既定",
+          "isolatedWorkspace": "新しい独立ワークスペース",
+          "reuseExisting": "既存のワークスペースを再利用"
+        },
+        "toolbar": {
+          "resumeNewEntries": "新規登録を再開",
+          "pauseNewEntries": "新規登録を停止",
+          "deleteStage": "{{name}}を削除"
+        },
+        "fields": {
+          "name": "名前",
+          "stepType": "ステップの種類",
+          "approver": "承認者",
+          "anyHuman": "任意の人",
+          "searchApprovers": "承認者を検索...",
+          "noApproversFound": "承認者が見つかりません。",
+          "reviewOutcomes": "レビュー結果",
+          "approvedMoveTo": "承認されたアイテムの移動先",
+          "declinedMoveTo": "却下されたアイテムの移動先",
+          "needingChangesMoveTo": "修正が必要なアイテムの移動先",
+          "chooseStage": "ステージを選択",
+          "stayInReview": "レビューにとどめる",
+          "askNoteRequestingChanges": "修正依頼時にメモの入力を求める",
+          "askNoteDeclining": "却下時にメモの入力を求める",
+          "reviewTargetsMissingHint": "保存する前に、承認および却下時の移動先を選択してください。"
+        },
+        "automation": {
+          "whenItemEnters": "アイテムがこのステップに入ったとき",
+          "pickAgent": "エージェントを選択",
+          "noAutomation": "自動化なし",
+          "searchAgents": "エージェントを検索...",
+          "noAgentsFound": "エージェントが見つかりません。",
+          "runsInstructionsSuffix": "がこの指示を実行し、アイテムを次のステップへ進めます。",
+          "projectContext": "プロジェクトのコンテキスト",
+          "project": "プロジェクト",
+          "noProject": "プロジェクトなし",
+          "searchProjects": "プロジェクトを検索...",
+          "noProjectsFound": "プロジェクトが見つかりません。",
+          "projectFallback": "プロジェクトの既定",
+          "projectWorkspace": "プロジェクトワークスペース",
+          "primaryTag": "プライマリ",
+          "noWorkspaceDefaultHint": "このプロジェクトには保存済みの既定ワークスペースがありません。自動化の実行時はプロジェクトの既定が使用されます。",
+          "executionWorkspace": "実行ワークスペース",
+          "executionWorkspaceMode": "実行ワークスペースのモード",
+          "existingExecutionWorkspace": "既存の実行ワークスペース",
+          "chooseExistingWorkspace": "既存のワークスペースを選択",
+          "newWorkspaceWillBeCreated": "新しいワークスペースが作成されます",
+          "projectDefaultWorkspace": "プロジェクトの既定ワークスペース",
+          "reusingWorkspaceFrom": "{{source}}の{{name}}を再利用します。",
+          "existingWorkspaceFallback": "既存のワークスペース",
+          "chooseWorkspaceBeforeSaving": "再利用モードを保存する前に、既存のワークスペースを選択してください。",
+          "agentRunsAutomatically": "{{name}}がこのステップを自動的に実行します。",
+          "issueTitle": "Issueのタイトル",
+          "issueTitleTemplate": "Issueタイトルのテンプレート",
+          "issueTitleVariables": "Issueタイトルの変数",
+          "whatShouldAgentDecide": "エージェントは何を判断すべきですか?",
+          "mechanicsHandledBelow": "仕組みは以下で設定済みです。ここには判断内容のみを書いてください。",
+          "instructionsPlaceholderBreakdown": "エージェントが行うべき判断を記述してください — 何を分割する価値がある単位とみなすか。",
+          "instructionsPlaceholderDefault": "アイテムがこのステップに入ったときに、エージェントが具体的に何をすべきかを記述してください...",
+          "nothingRunsAutomatically": "ここでは自動実行されるものはありません。人がアイテムを移動させるまで待機するか、このステップを実行するエージェントを選択できます。"
+        },
+        "variableTokens": {
+          "availableVariables": "使用できる変数",
+          "alreadyAvailableOnChildItems": "子アイテムで既に使用可能",
+          "insertToken": "{{token}}を挿入",
+          "groupPipelineAndStage": "パイプラインとステージ",
+          "groupCurrentItem": "現在のアイテム",
+          "groupItemFields": "アイテムのフィールド",
+          "pipelineId": { "label": "パイプラインID", "description": "この自動化が実行されるパイプラインのID。" },
+          "pipelineKey": { "label": "パイプラインキー", "description": "この自動化が実行されるパイプラインの固定キー。" },
+          "pipelineName": { "label": "パイプライン名", "description": "この自動化が実行されるパイプラインの表示名。" },
+          "stageId": { "label": "ステージID", "description": "この自動化ステージのID。" },
+          "stageKey": { "label": "ステージキー", "description": "この自動化ステージの固定キー。" },
+          "stageName": { "label": "ステージ名", "description": "この自動化ステージの表示名。" },
+          "itemTitle": { "label": "アイテムのタイトル", "description": "自動化対象アイテムのタイトル。" },
+          "itemBody": { "label": "アイテムの本文", "description": "自動化対象アイテムの本文テキスト。" },
+          "itemId": { "label": "アイテムID", "description": "自動化対象アイテムのID。" },
+          "itemKey": { "label": "アイテムキー", "description": "自動化対象アイテムの固定キー。" },
+          "itemTitleAlias": { "label": "アイテムのタイトル(旧名)", "description": "アイテムタイトルの互換用エイリアス。" },
+          "itemVersion": { "label": "アイテムのバージョン", "description": "自動化実行時点のアイテムのバージョン。" },
+          "fieldCopiedDescription": "現在のアイテムのデータからコピーされたフィールド。",
+          "previewExample": "例: {{kind}}、{{size}}文字",
+          "previewFrom": "取得元: {{source}}"
+        },
+        "breakdown": {
+          "title": "小さな単位に分割",
+          "description": "分割単位はエージェントが判断します。Paperclipがそれらを作成・追跡します。",
+          "createEachPieceIn": "各ピースの作成先",
+          "choosePipeline": "パイプラインを選択",
+          "openPipelineAria": "{{name}}パイプラインを開く",
+          "selectedFallback": "選択中",
+          "pipelineInWorkspaceHint": "このワークスペース内のパイプライン",
+          "startingAt": "開始ステージ",
+          "startingStageForEachPiece": "各ピースの開始ステージ",
+          "stageStartHint": "新しいピースが必ず開始するステージ",
+          "callEachPieceA": "各ピースの呼び方",
+          "piecePlaceholder": "ピース",
+          "drivesCopyHint": "このアイテムの表示に使われます(例:「5個中3{{plural}}が完了」)",
+          "carryOver": "引き継ぎ",
+          "carryOverHint": "値はこのアイテムとその親から引き継がれます。新しく対象になったフィールドは、チェックを外さない限り有効のままです。",
+          "destinationValidation": "移動先の検証:",
+          "selectedPipelineFallback": "選択したパイプライン",
+          "reviewDestinationFields": "移動先のフィールドを確認",
+          "destinationArchivedHint": "この移動先パイプラインはアーカイブされているため、復元するまで検証用フィールドを編集できません。",
+          "requiredBy": "{{name}}で必須",
+          "validatedBy": "{{name}}で検証",
+          "destinationFallback": "移動先",
+          "noCarryOverFieldsHint": "このパイプラインとその親には、引き継ぎ可能なフィールドがまだ定義されていません。",
+          "uniqueNameHint": "名前とタイトルの各フィールドは、新しい{{piece}}ごとに一意になるよう保たれます。",
+          "thenMoveThisCaseTo": "このアイテムの移動先",
+          "stayOnThisStep": "このステップにとどめる",
+          "asSoonAsPiecesCreated": "ピース作成後すぐに",
+          "wait": "待機",
+          "waitUntilAllFinished": "すべての{{plural}}が完了するまで待って、次の移動先へ",
+          "moveThisCaseWhenAllFinish": "すべてのピースが完了したときのこのアイテムの移動先",
+          "stillMovesToHint": "分割する価値がなかった場合でも、このアイテムは{{name}}へ移動します。"
+        }
+      }
     }
   }
 }

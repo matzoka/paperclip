@@ -4,8 +4,10 @@ import { useBreadcrumbs } from "@/context/BreadcrumbContext";
 import { useCompany } from "@/context/CompanyContext";
 import { PluginSlotMount, usePluginSlots } from "@/plugins/slots";
 import { NotFoundPage } from "./NotFound";
+import { useTranslation } from "@/i18n";
 
 export function CompanySettingsPluginPage() {
+  const { t } = useTranslation();
   const params = useParams<{
     companyPrefix?: string;
     settingsRoutePath?: string;
@@ -41,10 +43,10 @@ export function CompanySettingsPluginPage() {
   useEffect(() => {
     if (!pageSlot) return;
     setBreadcrumbs([
-      { label: "Settings", href: "/company/settings" },
+      { label: t("app.breadcrumbs.settings", { defaultValue: "Settings" }), href: "/company/settings" },
       { label: pageSlot.displayName },
     ]);
-  }, [pageSlot, setBreadcrumbs]);
+  }, [pageSlot, setBreadcrumbs, t]);
 
   if (!resolvedCompanyId) {
     if (hasInvalidCompanyPrefix) {

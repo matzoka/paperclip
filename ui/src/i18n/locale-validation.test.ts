@@ -18,23 +18,32 @@ describe("locale validation", () => {
     }
   });
 
-  it("rejects missing and extra nested keys", () => {
+  it("allows missing keys so untranslated strings can fall back to English", () => {
     expect(
       validateLocaleMessages({
         app: {
           noCompanies: {
             title: en.app.noCompanies.title,
             description: en.app.noCompanies.description,
+          },
+        },
+      }),
+    ).toEqual([]);
+  });
+
+  it("rejects extra nested keys not defined in English", () => {
+    expect(
+      validateLocaleMessages({
+        app: {
+          noCompanies: {
+            title: en.app.noCompanies.title,
+            description: en.app.noCompanies.description,
+            newCompany: en.app.noCompanies.newCompany,
             unexpected: "Unexpected",
           },
         },
       }),
-    ).toEqual(
-      expect.arrayContaining([
-        "app.noCompanies.newCompany is missing",
-        "app.noCompanies.unexpected is not defined in English",
-      ]),
-    );
+    ).toEqual(["app.noCompanies.unexpected is not defined in English"]);
   });
 
   it("rejects non-string leaves", () => {

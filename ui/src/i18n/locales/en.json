@@ -14,6 +14,13 @@
       "descriptionFirstOrg": "Get started by creating an organization and your first agent.",
       "addAgentButton": "Add Agent",
       "startOnboardingButton": "Start Onboarding"
+    },
+    "interactionAudience": {
+      "policyLabels": {
+        "anyone": "Anyone",
+        "notCreator": "Anyone except creator",
+        "humanOnly": "Human only"
+      }
     }
   },
   "settings": {
@@ -113,6 +120,80 @@
         "description": "Sign out of this Paperclip instance. You will be redirected to the login page.",
         "pending": "Signing out...",
         "action": "Sign out"
+      }
+    },
+    "company": {
+      "title": "General",
+      "noOrgSelected": "No organization selected. Select an organization from the switcher above.",
+      "general": {
+        "sectionTitle": "General",
+        "orgNameLabel": "Organization name",
+        "orgNameHint": "The display name for your organization.",
+        "renameHint": "Renaming can change this company's task ID prefix. Existing task IDs are renumbered and old task links stop resolving.",
+        "descriptionLabel": "Description",
+        "descriptionHint": "Optional description shown in the organization profile.",
+        "descriptionPlaceholder": "Optional organization description"
+      },
+      "appearance": {
+        "sectionTitle": "Appearance",
+        "logoLabel": "Logo",
+        "logoHint": "Upload a PNG, JPEG, WEBP, GIF, or SVG logo image.",
+        "removeLogo": "Remove logo",
+        "removing": "Removing...",
+        "uploading": "Uploading logo...",
+        "uploadFailed": "Logo upload failed"
+      },
+      "save": "Save changes",
+      "saving": "Saving...",
+      "saved": "Saved",
+      "saveFailed": "Failed to save",
+      "hiring": {
+        "sectionTitle": "Hiring",
+        "requireApprovalLabel": "Require board approval for new hires",
+        "requireApprovalHint": "New agent hires stay pending until approved by board."
+      },
+      "dangerZone": {
+        "sectionTitle": "Danger Zone",
+        "description": "Archive this organization to hide it from the sidebar. This persists in the database.",
+        "archiveButton": "Archive organization",
+        "archiving": "Archiving...",
+        "alreadyArchived": "Already archived",
+        "archiveFailed": "Failed to archive organization",
+        "archiveConfirm": "Archive organization \"{{name}}\"? It will be hidden from the sidebar."
+      },
+      "governance": {
+        "sectionTitle": "Interaction governance",
+        "kindLabels": {
+          "suggestTasks": "Suggested tasks",
+          "askUserQuestions": "Ask user questions",
+          "requestConfirmation": "Confirmations",
+          "requestCheckboxConfirmation": "Checkbox confirmations",
+          "requestItemVerdicts": "Item verdicts",
+          "connectionIntent": "Connection requests"
+        },
+        "unsetDefaultPolicyLabel": "Anyone (default)",
+        "unsetCapLabel": "No cap",
+        "unsetDefaultPolicyEffect": "New cards are open — the board or any agent can respond, including the one that asked.",
+        "unsetCapEffect": "A request keeps whatever audience it asks for.",
+        "defaultPolicyEffect": {
+          "notCreator": "New cards exclude the agent that created them, so the answer comes from someone else.",
+          "humanOnly": "New cards wait for a person on the board. Agents are turned away."
+        },
+        "capEffect": {
+          "notCreator": "Even a card that asks for Anyone is narrowed to exclude its creator.",
+          "humanOnly": "Every card of this kind waits for a person, whatever it asked for."
+        },
+        "columnKind": "Kind",
+        "columnDefaultPolicy": "Default policy",
+        "columnCap": "Cap",
+        "ariaDefaultFor": "Default resolver audience for {{kind}}",
+        "ariaCapFor": "Resolver cap for {{kind}}",
+        "introPrefix": "Thread interactions are open by default:",
+        "introAnyone": "Anyone",
+        "introMiddle": "in the organization — the board or any agent, including the one that asked — can respond. Narrow a kind only when you need to.",
+        "introDefaultPolicyEffect": "is the audience new cards get when the requester does not ask for one;",
+        "introCapEffect": "narrows every request of that kind and can never widen one. Tool-approval confirmations always stay",
+        "errorFailedToSave": "Failed to save interaction governance"
       }
     }
   }

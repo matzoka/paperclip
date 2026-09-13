@@ -64,6 +64,34 @@
 
 他の設定画面(`CompanySettings.tsx`・`PipelineSettings.tsx`・`PluginSettings.tsx`・`InstanceExperimentalSettings.tsx` 等)は未着手。
 
+**(2026-09-13追記, MATZ-11続き3・担当交代後)** Claude Engineerがセッション利用上限に達したため、Copilot Engineerが引き継ぎ、優先順位3(設定関連画面)を継続した。
+
+- `ui/src/pages/CompanySettings.tsx`(組織設定: 組織名・説明・ロゴ・保存ボタン・採用承認トグル・危険操作(アーカイブ確認ダイアログ含む))を全面的に `t()` 化。`settings.company.*` にキーを追加。
+- 同画面が使う `ui/src/components/InteractionGovernancePanel.tsx`(対応ポリシー: 種別ごとの既定対応範囲・上限の設定パネル)も合わせて翻訳した。導入文の断片結合(`introPrefix`/`introAnyone`/`introMiddle`/`introDefaultPolicyEffect`/`introCapEffect`)は `InstanceGeneralSettings.tsx` の `devHint*` パターンを踏襲。ラベル・効果文言・列見出し・種別名・aria-label をすべて `settings.company.governance.*` に集約した。
+- `ui/src/lib/interaction-audience.ts` の `resolverPolicyLabel()`(「Anyone」「Anyone except creator」「Human only」の短いラベル)を、共有 `app.interactionAudience.policyLabels.*` キーを参照するよう変更した。このラベルは `describeResolverAudience()` 内の `label` フィールドと `narrowedNote` の一文にも使われているため、カード単位のオーディエンス表示(Issue Thread Interactionカード・Attention Queue行、優先順位6の範囲)にも翻訳が波及する。ただし `describeResolverAudience()` 本体の文章(`summary`/`shortSummary`/`narrowedNote` の完全な文)・`RESOLVER_POLICY_EFFECTS`・`RESOLVER_POLICY_CHOICES` は本Issueの範囲外として未着手のまま残した(優先順位6着手時に対応)。ラベル参照は他のモジュールと同様、コンポーネント外のプレーン関数から呼べるよう `ui/src/i18n` がエクスポートするシングルトン `t()` を使用し、ロケール切り替え時に再計算されるよう関数化(モジュールロード時の定数から遅延評価する関数へ変更)した。
+- 各設定画面・ページに共通する `{ label: "Settings", href: "/company/settings" }` パンくずは、13箇所以上の別ページに同一の未翻訳文字列があるため、今回は変更していない(一部だけ翻訳すると画面遷移中に表記が揺れるため、まとめて対応する方が良いと判断)。次にこのパンくずへ着手する場合は全ページ一括で行うこと。
+
+### コミット・PR
+
+- 前回コメント時点の commit `8469c8b89` の後続として本変更をコミットする。
+- PR: https://github.com/matzoka/paperclip/pull/1(既存PRに自動反映)
+
+### テスト結果(Copilot Engineer継続分)
+
+- 依存関係が未インストールの状態から引き継いだため、`pnpm install --no-frozen-lockfile` を実行(既存の `patchedDependencies` ロックファイル不整合のため `--frozen-lockfile` は不可。前回同様 `pnpm-lock.yaml` は復元し未commitのまま維持)。
+- `ui`: `npx vitest run src/pages/CompanySettings.test.tsx src/components/InteractionGovernancePanel.test.tsx src/lib/interaction-audience.test.ts src/i18n` → InteractionGovernancePanel 14/14、i18n 17/17、interaction-audience 全件 pass。`CompanySettings.test.tsx`(実体は `CompanyEnvironments` のテスト、本変更では対象コンポーネント未変更)は間欠的に3/4失敗することがあったが、変更前のコミットに `git stash` で戻して同テストを複数回実行しても同様に間欠的に失敗する(3回中1〜2回失敗)ことを確認済み。前回コメントで報告済みの既存flakyと一致し、本変更が原因ではない。
+- `ui`: `npx tsc -b` → エラーなし。
+- `pnpm run i18n:scan` → `CompanySettings.tsx` / `InteractionGovernancePanel.tsx` は検出候補から消えたことを確認。
+- 全ロケールJSON構文確認: 問題なし。
+- モノレポ全体の `pnpm test`/`pnpm typecheck` は今回も未実施(このサンドボックスのNode 22.23.2がリポジトリ要求の24.11+と不一致のため)。`ui` パッケージ単体の `npx vitest run`(全593ファイル、非対話dotレポーター)も試みたが、このサンドボックスでは60分超経過しても完了しなかったため中断した(jsdom環境での大量の `act()` 警告出力が主因とみられる、本変更由来のエラーではない)。次担当は、より高速な環境、または対象を絞った実行(`--project` や変更ファイルに関連するディレクトリ単位)で全体テストを完了させることを推奨する。
+
+### 未完了範囲(次の作業)
+
+- 優先順位3(設定関連画面)は `ProfileSettings.tsx`・`InstanceGeneralSettings.tsx`・`CompanySettings.tsx` が完了。`PipelineSettings.tsx`(3400行超)・`PluginSettings.tsx`(1200行超)・`InstanceExperimentalSettings.tsx`(676行)は未着手。
+- 優先順位4以降(アクセス権・秘密情報・破壊的操作の警告・Issue/Task/Goal/Agent業務画面等)は未着手。
+- 共通パンくず `"Settings"`(13箇所以上)は未翻訳のまま。まとめて対応すること。
+- `ui/src/lib/interaction-audience.ts` の `describeResolverAudience()` 本体の文章化・`RESOLVER_POLICY_EFFECTS`・`RESOLVER_POLICY_CHOICES` は優先順位6(Issue Thread Interaction関連business画面)着手時に翻訳すること。
+
 ## 6. 用語集
 
 Paperclip内での意味を確認した上で選定した日本語訳。表記揺れを避けるため、新しい画面を翻訳する際は必ずこの表を参照する。

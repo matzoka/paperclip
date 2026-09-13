@@ -14,6 +14,13 @@
       "descriptionFirstOrg": "会社と最初のエージェントを作成して始めましょう。",
       "addAgentButton": "エージェントを追加",
       "startOnboardingButton": "オンボーディングを開始"
+    },
+    "interactionAudience": {
+      "policyLabels": {
+        "anyone": "誰でも",
+        "notCreator": "作成者以外の誰でも",
+        "humanOnly": "人間のみ"
+      }
     }
   },
   "settings": {
@@ -110,6 +117,80 @@
         "description": "このPaperclipインスタンスからサインアウトします。ログインページへリダイレクトされます。",
         "pending": "サインアウト中...",
         "action": "サインアウト"
+      }
+    },
+    "company": {
+      "title": "一般",
+      "noOrgSelected": "組織が選択されていません。上部の切り替えから組織を選択してください。",
+      "general": {
+        "sectionTitle": "一般",
+        "orgNameLabel": "組織名",
+        "orgNameHint": "組織の表示名です。",
+        "renameHint": "名前を変更すると、この会社のタスクIDプレフィックスが変わる場合があります。既存のタスクIDは振り直され、古いタスクリンクは無効になります。",
+        "descriptionLabel": "説明",
+        "descriptionHint": "組織プロフィールに表示される任意の説明です。",
+        "descriptionPlaceholder": "組織の説明(任意)"
+      },
+      "appearance": {
+        "sectionTitle": "外観",
+        "logoLabel": "ロゴ",
+        "logoHint": "PNG、JPEG、WEBP、GIF、SVG形式のロゴ画像をアップロードできます。",
+        "removeLogo": "ロゴを削除",
+        "removing": "削除中...",
+        "uploading": "ロゴをアップロード中...",
+        "uploadFailed": "ロゴのアップロードに失敗しました"
+      },
+      "save": "変更を保存",
+      "saving": "保存中...",
+      "saved": "保存しました",
+      "saveFailed": "保存に失敗しました",
+      "hiring": {
+        "sectionTitle": "採用",
+        "requireApprovalLabel": "新規採用にボードの承認を必須にする",
+        "requireApprovalHint": "新しいエージェントの採用は、ボードが承認するまで保留状態になります。"
+      },
+      "dangerZone": {
+        "sectionTitle": "危険な操作",
+        "description": "この組織をアーカイブすると、サイドバーから非表示になります。データベースには保持されます。",
+        "archiveButton": "組織をアーカイブ",
+        "archiving": "アーカイブ中...",
+        "alreadyArchived": "アーカイブ済み",
+        "archiveFailed": "組織のアーカイブに失敗しました",
+        "archiveConfirm": "組織「{{name}}」をアーカイブしますか?サイドバーから非表示になります。"
+      },
+      "governance": {
+        "sectionTitle": "対応ポリシー",
+        "kindLabels": {
+          "suggestTasks": "タスク提案",
+          "askUserQuestions": "ユーザーへの質問",
+          "requestConfirmation": "確認",
+          "requestCheckboxConfirmation": "チェックボックス確認",
+          "requestItemVerdicts": "項目の判定",
+          "connectionIntent": "接続リクエスト"
+        },
+        "unsetDefaultPolicyLabel": "誰でも(既定)",
+        "unsetCapLabel": "上限なし",
+        "unsetDefaultPolicyEffect": "新しいカードはオープンです — 依頼した本人を含め、ボードまたは任意のエージェントが対応できます。",
+        "unsetCapEffect": "リクエストは要求された対応範囲のまま維持されます。",
+        "defaultPolicyEffect": {
+          "notCreator": "新しいカードは作成したエージェントを除外するため、別の誰かが対応します。",
+          "humanOnly": "新しいカードはボードのメンバーの対応を待ちます。エージェントは対応できません。"
+        },
+        "capEffect": {
+          "notCreator": "「誰でも」を要求したカードでも、作成者を除外するよう制限されます。",
+          "humanOnly": "このカードは、何が要求されたかに関わらず必ず人による対応を待ちます。"
+        },
+        "columnKind": "種別",
+        "columnDefaultPolicy": "既定ポリシー",
+        "columnCap": "上限",
+        "ariaDefaultFor": "{{kind}}の既定の対応範囲",
+        "ariaCapFor": "{{kind}}の対応範囲の上限",
+        "introPrefix": "スレッドのやり取りは既定でオープンです:",
+        "introAnyone": "誰でも",
+        "introMiddle": "が組織内で対応できます — 依頼した本人を含め、ボードまたは任意のエージェントです。制限が必要な種別のみ絞り込んでください。",
+        "introDefaultPolicyEffect": "は、依頼者が対応範囲を指定しなかった場合に新しいカードへ適用される既定の対応範囲です;",
+        "introCapEffect": "はその種別のすべてのリクエストを絞り込み、決して広げることはありません。ツール承認の確認は常に",
+        "errorFailedToSave": "対応ポリシーの保存に失敗しました"
       }
     }
   }

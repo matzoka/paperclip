@@ -198,6 +198,49 @@
         "introCapEffect": "narrows every request of that kind and can never widen one. Tool-approval confirmations always stay",
         "errorFailedToSave": "Failed to save interaction governance"
       }
+    },
+    "pipeline": {
+      "breadcrumb": "Pipelines",
+      "guards": {
+        "selectOrganization": "Select an organization to edit pipeline settings.",
+        "noPipelineSelected": "No pipeline selected.",
+        "notFound": "Pipeline not found."
+      },
+      "header": {
+        "backToBoard": "Back to board",
+        "actionsMenuTitle": "Pipeline actions",
+        "restore": "Restore pipeline",
+        "nameLabel": "Pipeline name",
+        "descriptionLabel": "Pipeline description",
+        "descriptionPlaceholder": "Add a description",
+        "save": "Save details",
+        "saving": "Saving..."
+      },
+      "stageList": {
+        "empty": "No stages configured.",
+        "addFirstStage": "Add first stage",
+        "stepLabel": "Step {{number}}",
+        "newEntriesPaused": "New entries paused",
+        "viewQueue": "View queue",
+        "insertStageAfter": "Insert stage after {{name}}",
+        "warningsCount_one": "{{count}} warning",
+        "warningsCount_other": "{{count}} warnings",
+        "stageAriaLabelWithWarnings_one": "{{name}}, {{count}} warning",
+        "stageAriaLabelWithWarnings_other": "{{name}}, {{count}} warnings"
+      },
+      "toast": {
+        "pipelineUpdated": "Pipeline updated",
+        "stageAdded": "Stage added",
+        "pipelineRestored": "Pipeline restored"
+      },
+      "archive": {
+        "title": "Archive pipeline",
+        "description": "Archiving hides this pipeline from everyday views. Its stages and items are kept and can be restored later.",
+        "confirmLabel": "Type {{name}} to confirm",
+        "confirmAriaLabel": "Archive confirmation",
+        "cancel": "Cancel",
+        "pending": "Archiving..."
+      }
     }
   }
 }

@@ -1645,7 +1645,7 @@ export function PipelineSettings() {
   useEffect(() => {
     if (!pipeline) return;
     setBreadcrumbs([
-      { label: "Pipelines", href: "/pipelines" },
+      { label: t("settings.pipeline.breadcrumb", { defaultValue: "Pipelines" }), href: "/pipelines" },
       { label: pipeline.name, href: `/pipelines/${pipeline.id}` },
       { label: t("app.breadcrumbs.settings", { defaultValue: "Settings" }) },
     ]);
@@ -1992,7 +1992,7 @@ export function PipelineSettings() {
       if (created) {
         setSelectedStageId(created.id);
       }
-      pushToast({ title: "Stage added", tone: "success" });
+      pushToast({ title: t("settings.pipeline.toast.stageAdded", { defaultValue: "Stage added" }), tone: "success" });
     },
   });
 
@@ -2033,7 +2033,7 @@ export function PipelineSettings() {
       if (selectedCompanyId) {
         await queryClient.invalidateQueries({ queryKey: queryKeys.pipelines.list(selectedCompanyId) });
       }
-      pushToast({ title: "Pipeline updated", tone: "success" });
+      pushToast({ title: t("settings.pipeline.toast.pipelineUpdated", { defaultValue: "Pipeline updated" }), tone: "success" });
     },
   });
 
@@ -2066,7 +2066,7 @@ export function PipelineSettings() {
         navigate("/pipelines");
       } else {
         await refreshPipeline();
-        pushToast({ title: "Pipeline restored", tone: "success" });
+        pushToast({ title: t("settings.pipeline.toast.pipelineRestored", { defaultValue: "Pipeline restored" }), tone: "success" });
       }
     },
   });
@@ -2121,11 +2121,23 @@ export function PipelineSettings() {
   };
 
   if (!selectedCompanyId) {
-    return <EmptyState icon={Hexagon} message="Select an organization to edit pipeline settings." />;
+    return (
+      <EmptyState
+        icon={Hexagon}
+        message={t("settings.pipeline.guards.selectOrganization", {
+          defaultValue: "Select an organization to edit pipeline settings.",
+        })}
+      />
+    );
   }
 
   if (!pipelineId) {
-    return <EmptyState icon={Hexagon} message="No pipeline selected." />;
+    return (
+      <EmptyState
+        icon={Hexagon}
+        message={t("settings.pipeline.guards.noPipelineSelected", { defaultValue: "No pipeline selected." })}
+      />
+    );
   }
 
   if (pipelineQuery.isLoading) {
@@ -2137,7 +2149,12 @@ export function PipelineSettings() {
   }
 
   if (!pipeline) {
-    return <EmptyState icon={Hexagon} message="Pipeline not found." />;
+    return (
+      <EmptyState
+        icon={Hexagon}
+        message={t("settings.pipeline.guards.notFound", { defaultValue: "Pipeline not found." })}
+      />
+    );
   }
 
   const isArchived = Boolean(pipeline.archivedAt);
@@ -2564,11 +2581,17 @@ export function PipelineSettings() {
       >
         <div className="mb-3 flex items-start justify-between gap-3">
           <Link to={`/pipelines/${pipeline.id}`} className="text-sm text-muted-foreground hover:text-foreground">
-            Back to board
+            {t("settings.pipeline.header.backToBoard", { defaultValue: "Back to board" })}
           </Link>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button type="button" variant="outline" size="icon" className="h-8 w-8" title="Pipeline actions">
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                className="h-8 w-8"
+                title={t("settings.pipeline.header.actionsMenuTitle", { defaultValue: "Pipeline actions" })}
+              >
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -2576,12 +2599,12 @@ export function PipelineSettings() {
               {isArchived ? (
                 <DropdownMenuItem onSelect={() => archivePipeline.mutate(false)}>
                   <Archive className="h-4 w-4" />
-                  Restore pipeline
+                  {t("settings.pipeline.header.restore", { defaultValue: "Restore pipeline" })}
                 </DropdownMenuItem>
               ) : (
                 <DropdownMenuItem variant="destructive" onSelect={() => setArchiveDialogOpen(true)}>
                   <Archive className="h-4 w-4" />
-                  Archive pipeline
+                  {t("settings.pipeline.archive.title", { defaultValue: "Archive pipeline" })}
                 </DropdownMenuItem>
               )}
             </DropdownMenuContent>
@@ -2590,9 +2613,9 @@ export function PipelineSettings() {
         <div className="grid gap-3 md:grid-cols-(--gtc-13) md:items-end">
           <div className="space-y-3">
             <label className="block space-y-1.5 text-sm font-medium">
-              <span className="sr-only">Pipeline name</span>
+              <span className="sr-only">{t("settings.pipeline.header.nameLabel", { defaultValue: "Pipeline name" })}</span>
               <Input
-                aria-label="Pipeline name"
+                aria-label={t("settings.pipeline.header.nameLabel", { defaultValue: "Pipeline name" })}
                 value={pipelineName}
                 onChange={(event) => setPipelineName(event.target.value)}
                 required
@@ -2600,13 +2623,15 @@ export function PipelineSettings() {
               />
             </label>
             <label className="block space-y-1.5 text-sm font-medium">
-              <span className="sr-only">Pipeline description</span>
+              <span className="sr-only">
+                {t("settings.pipeline.header.descriptionLabel", { defaultValue: "Pipeline description" })}
+              </span>
               <Textarea
-                aria-label="Pipeline description"
+                aria-label={t("settings.pipeline.header.descriptionLabel", { defaultValue: "Pipeline description" })}
                 value={pipelineDescription}
                 onChange={(event) => setPipelineDescription(event.target.value)}
                 rows={2}
-                placeholder="Add a description"
+                placeholder={t("settings.pipeline.header.descriptionPlaceholder", { defaultValue: "Add a description" })}
                 className="min-h-0 resize-none border-0 bg-transparent px-0 py-0 text-sm text-muted-foreground shadow-none focus-visible:ring-0"
               />
             </label>
@@ -2614,7 +2639,9 @@ export function PipelineSettings() {
           {detailsDirty || savePipelineDetails.isPending ? (
             <Button type="submit" disabled={savePipelineDetails.isPending || !pipelineName.trim()}>
               <Save className="h-4 w-4" />
-              {savePipelineDetails.isPending ? "Saving..." : "Save details"}
+              {savePipelineDetails.isPending
+                ? t("settings.pipeline.header.saving", { defaultValue: "Saving..." })
+                : t("settings.pipeline.header.save", { defaultValue: "Save details" })}
             </Button>
           ) : null}
         </div>
@@ -2627,8 +2654,8 @@ export function PipelineSettings() {
           {stages.length === 0 ? (
             <EmptyState
               icon={GitBranch}
-              message="No stages configured."
-              action="Add first stage"
+              message={t("settings.pipeline.stageList.empty", { defaultValue: "No stages configured." })}
+              action={t("settings.pipeline.stageList.addFirstStage", { defaultValue: "Add first stage" })}
               onAction={() => addStage.mutate(null)}
             />
           ) : (
@@ -2645,7 +2672,11 @@ export function PipelineSettings() {
                           type="button"
                           aria-label={
                             warningCount > 0
-                              ? `${stage.name}, ${warningCount} ${warningCount === 1 ? "warning" : "warnings"}`
+                              ? t("settings.pipeline.stageList.stageAriaLabelWithWarnings", {
+                                  defaultValue: `${stage.name}, ${warningCount} ${warningCount === 1 ? "warning" : "warnings"}`,
+                                  name: stage.name,
+                                  count: warningCount,
+                                })
                               : stage.name
                           }
                           className={cn(
@@ -2662,15 +2693,23 @@ export function PipelineSettings() {
                             {warningCount > 0 ? (
                               <span className="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-amber-700 dark:text-amber-300">
                                 <AlertTriangle className="h-3.5 w-3.5" />
-                                {warningCount} {warningCount === 1 ? "warning" : "warnings"}
+                                {t("settings.pipeline.stageList.warningsCount", {
+                                  defaultValue: `${warningCount} ${warningCount === 1 ? "warning" : "warnings"}`,
+                                  count: warningCount,
+                                })}
                               </span>
                             ) : null}
                           </span>
-                          <span className="mt-1 block text-xs text-muted-foreground">Step {index + 1}</span>
+                          <span className="mt-1 block text-xs text-muted-foreground">
+                            {t("settings.pipeline.stageList.stepLabel", {
+                              defaultValue: `Step ${index + 1}`,
+                              number: index + 1,
+                            })}
+                          </span>
                           {stageNewEntriesDisabled(stage) ? (
                             <span className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-amber-700 dark:text-amber-300">
                               <AlertTriangle className="h-3 w-3" />
-                              New entries paused
+                              {t("settings.pipeline.stageList.newEntriesPaused", { defaultValue: "New entries paused" })}
                             </span>
                           ) : null}
                         </button>
@@ -2678,14 +2717,17 @@ export function PipelineSettings() {
                           to={`/pipelines/${pipelineId}`}
                           className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground hover:underline"
                         >
-                          View queue
+                          {t("settings.pipeline.stageList.viewQueue", { defaultValue: "View queue" })}
                           <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
                         </Link>
                       </div>
                       {canInsertAfter ? (
                         <button
                           type="button"
-                          aria-label={`Insert stage after ${stage.name}`}
+                          aria-label={t("settings.pipeline.stageList.insertStageAfter", {
+                            defaultValue: `Insert stage after ${stage.name}`,
+                            name: stage.name,
+                          })}
                           className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-dashed border-border text-muted-foreground hover:border-foreground hover:text-foreground"
                           onClick={() => addStage.mutate(stage)}
                           disabled={addStage.isPending}
@@ -3375,16 +3417,24 @@ export function PipelineSettings() {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Archive pipeline</DialogTitle>
+            <DialogTitle>{t("settings.pipeline.archive.title", { defaultValue: "Archive pipeline" })}</DialogTitle>
             <DialogDescription>
-              Archiving hides this pipeline from everyday views. Its stages and items are kept and can be restored later.
+              {t("settings.pipeline.archive.description", {
+                defaultValue:
+                  "Archiving hides this pipeline from everyday views. Its stages and items are kept and can be restored later.",
+              })}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-3">
             <label className="block space-y-1.5 text-sm font-medium">
-              <span>Type {pipeline.name} to confirm</span>
+              <span>
+                {t("settings.pipeline.archive.confirmLabel", {
+                  defaultValue: `Type ${pipeline.name} to confirm`,
+                  name: pipeline.name,
+                })}
+              </span>
               <Input
-                aria-label="Archive confirmation"
+                aria-label={t("settings.pipeline.archive.confirmAriaLabel", { defaultValue: "Archive confirmation" })}
                 value={archiveConfirmation}
                 onChange={(event) => setArchiveConfirmation(event.target.value)}
                 autoComplete="off"
@@ -3401,7 +3451,7 @@ export function PipelineSettings() {
               onClick={() => setArchiveDialogOpen(false)}
               disabled={archivePipeline.isPending}
             >
-              Cancel
+              {t("settings.pipeline.archive.cancel", { defaultValue: "Cancel" })}
             </Button>
             <Button
               type="button"
@@ -3410,7 +3460,9 @@ export function PipelineSettings() {
               onClick={() => archivePipeline.mutate(true)}
             >
               <Archive className="h-4 w-4" />
-              {archivePipeline.isPending ? "Archiving..." : "Archive pipeline"}
+              {archivePipeline.isPending
+                ? t("settings.pipeline.archive.pending", { defaultValue: "Archiving..." })
+                : t("settings.pipeline.archive.title", { defaultValue: "Archive pipeline" })}
             </Button>
           </DialogFooter>
         </DialogContent>

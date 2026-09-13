@@ -105,6 +105,37 @@
 - 優先順位4以降(アクセス権・秘密情報・破壊的操作の警告・Issue/Task/Goal/Agent業務画面等)は未着手。上記16箇所のパンくずの兄弟ラベルは、対応する画面の優先順位が来たタイミングでまとめて翻訳すること。
 - `ui/src/lib/interaction-audience.ts` の `describeResolverAudience()` 本体の文章化・`RESOLVER_POLICY_EFFECTS`・`RESOLVER_POLICY_CHOICES` は優先順位6(Issue Thread Interaction関連business画面)着手時に翻訳すること。
 
+**(2026-09-13追記, MATZ-27・Squad方式移行後の最初の工程)** Multica Issue MATZ-12以降、残作業をSquad方式(1子Issue・1 Stage・直列進行)へ移行した。本工程(MATZ-27、Stage 1)は `PipelineSettings.tsx` のうち、パイプライン一覧・選択・ページヘッダー・作成/名称変更/アーカイブ等の「パイプライン基本操作」に範囲を限定して翻訳した。Stage詳細エディタ内部(Instructions/Automation/Secrets/Advanced/Activity/History等の各タブとStage削除ダイアログ)は後続工程(Stage 2: MATZ-13、Stage 3: MATZ-14)へ意図的に残している。
+
+- 新規キー `settings.pipeline.*` を追加(`breadcrumb`・`guards.*`・`header.*`・`stageList.*`・`toast.*`・`archive.*`)。
+- 対象にした具体的な範囲:
+  - ページ上部のパンくず先頭「Pipelines」ラベル(`settings.pipeline.breadcrumb`)。
+  - 未選択・組織未選択・Pipeline未検出時のガード文言(`EmptyState` message)。
+  - ページヘッダー: 「Back to board」リンク、「Pipeline actions」ドロップダウン(タイトル属性・Restore pipeline項目)、パイプライン名/説明の入力欄(`sr-only`ラベル・`aria-label`・placeholder)、「Save details」ボタンと保存中表示、保存成功トースト「Pipeline updated」。
+  - ステージ一覧バー(パイプライン内のステージ全体を横並びで表示する部分。パイプラインそのものの一覧ではなく、1パイプライン内のステージ構成を俯瞰・選択する導線): 空状態メッセージと「Add first stage」、各ステージボタンの `aria-label`(警告件数を含む複数形キー)、可視の警告バッジ、「Step N」ラベル、「New entries paused」バッジ、「View queue」リンク、「Insert stage after {name}」の `aria-label`、ステージ追加成功トースト「Stage added」。
+  - アーカイブ操作: メニュー項目・ダイアログタイトル(`settings.pipeline.archive.title` を3箇所で再利用)、ダイアログ本文、確認用テキスト入力のラベル・`aria-label`、Cancel/Archiving中/確認ボタン、復元成功トースト「Pipeline restored」。
+- 意図的に対象外とした範囲(Stage詳細エディタ内部、Stage 2/3の担当範囲):
+  - `StageSubSidebar`(Instructions/Automation/Secrets/Activity/Historyのタブナビゲーション、"Stage section(s)")。
+  - 選択中ステージのフォーム本体(Name/Step type/承認設定/Automation/変数トークン/実行Workspace/「Break into smaller pieces」/Transitions/Children等、`i18n:scan` 実測で41件以上)。
+  - 「Delete stage」ダイアログ一式(ボタン・タイトル・本文・Move existing items to等)は、MATZ-14の説明文が明示的に「Stage削除」を自Stageの範囲としているため、本工程では触れていない。
+  - `saveStage`/`saveStageEnv`/`saveStrictTransitions`/`deleteStage` の各トースト(Stage/Advanced/Secrets領域の保存・削除に付随するため)。
+- 用語: 「Pipeline」は「パイプライン」(既存訳語なし、新規に採用)。ステージ一覧バーの可視ラベルは原文が "Step N" のため「ステップ N」と訳し、操作系の名詞(Add/Delete/Insert stage 等、Stage詳細エディタ側の担当分含む)は「ステージ」で統一する方針とした(英語UI自体が両方の語を混在させているため、日本語でも文脈により使い分ける)。
+
+### テスト結果(MATZ-27)
+
+- 依存関係インストール: `pnpm install --no-frozen-lockfile`(このNode 22.23.2サンドボックスでは前回同様 `--frozen-lockfile` 不可)。`pnpm-lock.yaml` はテスト実行後 `git checkout --` で復元し、未commitのまま維持(前回踏襲)。
+- `ui`: `npx vitest run src/pages/PipelineSettings.test.ts src/i18n` → 全24件pass。
+- `ui`: `npx tsc -b` → エラーなし。
+- `pnpm run i18n:scan` → `PipelineSettings.tsx` の検出件数は46件(すべてStage詳細エディタ内部、`--json` 出力で全件確認済み)。本工程で対象にした範囲の文字列は検出0件になったことを確認。
+- 全ロケールJSON構文確認: 全43ロケールでパース成功を確認。
+- モノレポ全体の `pnpm test`/`pnpm typecheck` は今回も未実施(前回同様の理由、Node要求バージョン不一致とサンドボックスでの全体テスト所要時間の問題)。今回の変更は1ファイル+ロケールJSONの追記のみのため、対象を絞った実行で十分と判断した。
+
+### 未完了範囲(次の作業、MATZ-27完了時点)
+
+- 優先順位3の残り: `PipelineSettings.tsx` のStage詳細エディタ内部(Stage 2: MATZ-13が対象)、Secrets・Advanced・Activity・History・Stage削除・残りの未i18n候補整理(Stage 3: MATZ-14が対象)。`PluginSettings.tsx`(Stage 4: MATZ-15)・`InstanceExperimentalSettings.tsx`(Stage 5: MATZ-16)は未着手。
+- 優先順位4以降は引き続き未着手(Stage 6以降で対応予定)。
+- 共通パンくず兄弟ラベル・`interaction-audience.ts` の残課題は従来どおり据え置き。
+
 ## 6. 用語集
 
 Paperclip内での意味を確認した上で選定した日本語訳。表記揺れを避けるため、新しい画面を翻訳する際は必ずこの表を参照する。
@@ -122,6 +153,8 @@ Paperclip内での意味を確認した上で選定した日本語訳。表記�
 | Adapter | アダプター | — |
 | Workspace | ワークスペース | — |
 | Skill | スキル | — |
+| Pipeline | パイプライン | — |
+| Stage | ステージ | UI見出しの序数表示(例: "Step 1")は「ステップ」を使う。操作動詞を伴う名詞(Add/Delete/Insert stage等)は「ステージ」で統一。 |
 
 製品固有概念として英語表記の方が理解しやすい場合(Issue, Run, Todo等)は無理に訳さない。今後、新しい概念語が出てきた場合はこの表に追記すること。
 

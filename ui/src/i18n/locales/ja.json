@@ -195,6 +195,47 @@
         "introCapEffect": "はその種別のすべてのリクエストを絞り込み、決して広げることはありません。ツール承認の確認は常に",
         "errorFailedToSave": "対応ポリシーの保存に失敗しました"
       }
+    },
+    "pipeline": {
+      "breadcrumb": "パイプライン",
+      "guards": {
+        "selectOrganization": "パイプライン設定を編集するには組織を選択してください。",
+        "noPipelineSelected": "パイプラインが選択されていません。",
+        "notFound": "パイプラインが見つかりません。"
+      },
+      "header": {
+        "backToBoard": "ボードに戻る",
+        "actionsMenuTitle": "パイプラインの操作",
+        "restore": "パイプラインを復元",
+        "nameLabel": "パイプライン名",
+        "descriptionLabel": "パイプラインの説明",
+        "descriptionPlaceholder": "説明を追加",
+        "save": "詳細を保存",
+        "saving": "保存中..."
+      },
+      "stageList": {
+        "empty": "ステージが設定されていません。",
+        "addFirstStage": "最初のステージを追加",
+        "stepLabel": "ステップ {{number}}",
+        "newEntriesPaused": "新規登録を停止中",
+        "viewQueue": "キューを表示",
+        "insertStageAfter": "{{name}}の後にステージを挿入",
+        "warningsCount_other": "警告{{count}}件",
+        "stageAriaLabelWithWarnings_other": "{{name}}(警告{{count}}件)"
+      },
+      "toast": {
+        "pipelineUpdated": "パイプラインを更新しました",
+        "stageAdded": "ステージを追加しました",
+        "pipelineRestored": "パイプラインを復元しました"
+      },
+      "archive": {
+        "title": "パイプラインをアーカイブ",
+        "description": "アーカイブすると、このパイプラインは通常の画面から非表示になります。ステージとアイテムは保持され、後で復元できます。",
+        "confirmLabel": "確認のため {{name}} と入力してください",
+        "confirmAriaLabel": "アーカイブの確認",
+        "cancel": "キャンセル",
+        "pending": "アーカイブ中..."
+      }
     }
   }
 }

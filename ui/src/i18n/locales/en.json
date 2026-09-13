@@ -15,5 +15,35 @@
       "addAgentButton": "Add Agent",
       "startOnboardingButton": "Start Onboarding"
     }
+  },
+  "settings": {
+    "profile": {
+      "title": "Profile",
+      "description": "Control how your account appears in the sidebar and other board surfaces.",
+      "loading": "Loading profile...",
+      "loadError": "Failed to load profile.",
+      "changePhoto": "Change photo",
+      "uploadPhoto": "Upload photo",
+      "remove": "Remove",
+      "uploadHintWithCompany": "Stored in Paperclip file storage for {{companyName}}.",
+      "uploadHintNoCompany": "Select an organization to upload an avatar into Paperclip storage.",
+      "noEmail": "No email",
+      "clickAvatarHint": "Click the avatar to upload a new image. {{uploadHint}}",
+      "displayNameLabel": "Display name",
+      "displayNameHint": "Shown in the sidebar account footer and comment author surfaces.",
+      "emailLabel": "Email",
+      "emailHint": "Email is managed by your auth session and is read-only here.",
+      "save": "Save profile",
+      "saving": "Saving...",
+      "avatarSelectOrgError": "Select an organization before uploading a profile avatar.",
+      "avatarUpdateError": "Failed to update profile.",
+      "avatarUploadError": "Failed to upload avatar.",
+      "avatarRemoveError": "Failed to remove avatar."
+    },
+    "language": {
+      "title": "Language",
+      "description": "Choose the language used across the Paperclip interface. Screens that aren't translated yet fall back to English.",
+      "label": "Display language"
+    }
   }
 }

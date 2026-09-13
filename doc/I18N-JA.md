@@ -52,7 +52,9 @@
 2. ブラウザ/OSの `navigator.languages` / `navigator.language` に一致する対応ロケール
 3. どちらも無ければ `en`
 
-`setLocale(locale)` は選択を `localStorage` へ保存し `i18n.changeLanguage()` を呼ぶ。**現時点でこれを呼び出す設定画面UIはまだ存在しない**(優先順位3「設定関連画面」で追加予定)。テストは `ui/src/i18n/locale-detection.test.ts`。
+`setLocale(locale)` は選択を `localStorage` へ保存し `i18n.changeLanguage()` を呼ぶ。テストは `ui/src/i18n/locale-detection.test.ts`。
+
+**(2026-09-13追記, MATZ-11続き)** `setLocale()` を呼び出す設定画面UIを `ui/src/pages/ProfileSettings.tsx`(個人プロフィール設定、優先順位3の最初の画面)に追加した。`supportedLocales`(約40言語)全件を選択肢とし、`ui/src/i18n/locale-names.ts` の `getLocaleDisplayName()`(`Intl.DisplayNames` ラッパー、ICU未対応環境ではロケールコードへフォールバック)で現在の表示言語における各言語名を表示する。同画面の静的文言(見出し・ラベル・エラーメッセージ)も合わせて `t()` 化した(`en.json`/`ja.json` の `settings.profile.*` / `settings.language.*`)。プレースホルダー `"Board"`(デフォルト表示名の例)は製品固有の慣用表記として翻訳していない。他の設定画面(`InstanceGeneralSettings.tsx` 等)は未着手。
 
 ## 6. 用語集
 

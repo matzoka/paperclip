@@ -15,5 +15,35 @@
       "addAgentButton": "エージェントを追加",
       "startOnboardingButton": "オンボーディングを開始"
     }
+  },
+  "settings": {
+    "profile": {
+      "title": "プロフィール",
+      "description": "サイドバーやその他のボード画面に表示されるアカウント情報を管理します。",
+      "loading": "プロフィールを読み込んでいます...",
+      "loadError": "プロフィールの読み込みに失敗しました。",
+      "changePhoto": "写真を変更",
+      "uploadPhoto": "写真をアップロード",
+      "remove": "削除",
+      "uploadHintWithCompany": "{{companyName}}のPaperclipファイルストレージに保存されます。",
+      "uploadHintNoCompany": "アバターをアップロードするには、先に組織を選択してください。",
+      "noEmail": "メールアドレス未設定",
+      "clickAvatarHint": "アバターをクリックすると新しい画像をアップロードできます。{{uploadHint}}",
+      "displayNameLabel": "表示名",
+      "displayNameHint": "サイドバーのアカウントフッターやコメントの投稿者欄に表示されます。",
+      "emailLabel": "メールアドレス",
+      "emailHint": "メールアドレスは認証セッションで管理されており、ここでは変更できません。",
+      "save": "プロフィールを保存",
+      "saving": "保存中...",
+      "avatarSelectOrgError": "プロフィール画像をアップロードする前に組織を選択してください。",
+      "avatarUpdateError": "プロフィールの更新に失敗しました。",
+      "avatarUploadError": "アバターのアップロードに失敗しました。",
+      "avatarRemoveError": "アバターの削除に失敗しました。"
+    },
+    "language": {
+      "title": "言語",
+      "description": "Paperclipの表示言語を選択します。未翻訳の画面は英語で表示されます。",
+      "label": "表示言語"
+    }
   }
 }
